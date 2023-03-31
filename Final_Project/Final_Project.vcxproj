@@ -129,9 +129,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CAssets.cpp" />
-    <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGameObjects.cpp" />
+    <ClCompile Include="CGraphicHandler.cpp" />
+    <ClCompile Include="CSprite.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,9 +141,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAssets.h" />
-    <ClInclude Include="CGame.h" />
-    <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGameObjects.h" />
+    <ClInclude Include="CGraphicHandler.h" />
+    <ClInclude Include="CSprite.h" />
+    <ClInclude Include="CTexture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

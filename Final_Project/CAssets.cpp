@@ -1,9 +1,9 @@
 #include "CAssets.h"
 
 // Singleton
-LPASSETS CAssets::instance = NULL;
+CAssets* CAssets::instance = nullptr;
 
-LPASSETS CAssets::GetInstance()
+CAssets* CAssets::GetInstance()
 {
 	if (instance == NULL) instance = new CAssets();
 	return instance;

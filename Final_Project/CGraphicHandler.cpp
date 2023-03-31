@@ -1,12 +1,20 @@
-#include "CGame.h"
+#include "CGraphicHandler.h"
 
-// Singleton
-LPGAME CGame::instance = NULL;
+CGraphicHandler* CGraphicHandler::instance = nullptr;
 
-LPGAME CGame::GetInstance()
+CGraphicHandler* CGraphicHandler::GetInstance()
 {
-	if (instance == NULL) instance = new CGame();
+	if (instance == NULL) instance = new CGraphicHandler();
 	return instance;
+}
+
+CGraphicHandler::~CGraphicHandler()
+{
+	this->pBlendStateAlpha->Release();
+	this->spriteObject->Release();
+	this->pRenderTargetView->Release();
+	this->pSwapChain->Release();
+	this->pD3DDevice->Release();
 }
 
 /*
@@ -14,7 +22,7 @@ LPGAME CGame::GetInstance()
 	rendering 2D images
 	- hWnd: Application window handle
 */
-void CGame::Init(HWND hWnd, HINSTANCE hInstance)
+void CGraphicHandler::Init(HWND hWnd, HINSTANCE hInstance)
 {
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
@@ -154,20 +162,83 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	return;
 }
 
-LPASSETS CGame::GetAssetHandler() { return this->assets->GetInstance(); }
+int CGraphicHandler::GetBackBufferWidth() { return this->backBufferWidth; }
+int CGraphicHandler::GetBackBufferHeight() { return this->backBufferHeight; }
 
-ID3D10Device* CGame::GetDirect3DDevice() { return this->pD3DDevice; }
-IDXGISwapChain* CGame::GetSwapChain() { return this->pSwapChain; }
-ID3D10RenderTargetView* CGame::GetRenderTargetView() { return this->pRenderTargetView; }
-ID3DX10Sprite* CGame::GetSpriteHandler() { return this->spriteObject; }
-ID3D10BlendState* CGame::GetAlphaBlending() { return this->pBlendStateAlpha; }
+ID3D10Device* CGraphicHandler::GetDirect3DDevice() { return this->pD3DDevice; }
+IDXGISwapChain* CGraphicHandler::GetSwapChain() { return this->pSwapChain; }
+ID3D10RenderTargetView* CGraphicHandler::GetRenderTargetView() { return this->pRenderTargetView; }
+ID3DX10Sprite* CGraphicHandler::GetSpriteHandler() { return this->spriteObject; }
+ID3D10BlendState* CGraphicHandler::GetAlphaBlending() { return this->pBlendStateAlpha; }
 
-int CGame::GetBackBufferWidth() { return backBufferWidth; }
-int CGame::GetBackBufferHeight() { return backBufferHeight; }
-
-void CGame::SetPointSamplerState()
+void CGraphicHandler::SetPointSamplerState()
 {
 	pD3DDevice->VSSetSamplers(0, 1, &pPointSamplerState);
 	pD3DDevice->GSSetSamplers(0, 1, &pPointSamplerState);
 	pD3DDevice->PSSetSamplers(0, 1, &pPointSamplerState);
+}
+
+void CGraphicHandler::Render(float x, float y, CTexture* tex, RECT* rect, float alpha, int sprite_width, int sprite_height)
+{
+	if (tex == NULL) return;
+
+	int spriteWidth = sprite_width;
+	int spriteHeight = sprite_height;
+
+	D3DX10_SPRITE sprite;
+
+	// Set the sprite’s shader resource view
+	sprite.pTexture = tex->getShaderResourceView();
+
+	if (rect == NULL)
+	{
+		// top-left location in U,V coords
+		sprite.TexCoord.x = 0;
+		sprite.TexCoord.y = 0;
+
+		// Determine the texture size in U,V coords
+		sprite.TexSize.x = 1.0f;
+		sprite.TexSize.y = 1.0f;
+
+		if (spriteWidth == 0) spriteWidth = tex->getWidth();
+		if (spriteHeight == 0) spriteHeight = tex->getHeight();
+	}
+	else
+	{
+		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
+		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
+
+		if (spriteWidth == 0) spriteWidth = (rect->right - rect->left + 1);
+		if (spriteHeight == 0) spriteHeight = (rect->bottom - rect->top + 1);
+
+		sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
+		sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
+	}
+
+	// Set the texture index. Single textures will use 0
+	sprite.TextureIndex = 0;
+
+	// The color to apply to this sprite, full color applies white.
+	//sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha);
+
+
+	//
+	// Build the rendering matrix based on sprite location 
+	//
+
+	// The translation matrix to be created
+	D3DXMATRIX matTranslation;
+
+	// Create the translation matrix
+	D3DXMatrixTranslation(&matTranslation, x, (this->backBufferHeight - y), 0.1f);
+
+	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
+	D3DXMATRIX matScaling;
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+
+	// Setting the sprite’s position and size
+	sprite.matWorld = (matScaling * matTranslation);
+
+	this->spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }

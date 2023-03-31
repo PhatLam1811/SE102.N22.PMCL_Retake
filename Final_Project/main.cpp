@@ -19,7 +19,7 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 2) execute command :  Install-Package Microsoft.DXSDK.D3DX
 ================================================================ */
 
-#include "CGame.h"
+#include "CGameManager.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"SE102.N22.PMCL - Final Project"
@@ -56,19 +56,20 @@ void Update(DWORD dt)
 */
 void Render()
 {
-	CGame* g = CGame::GetInstance();
+	CGameManager* gameManager = CGameManager::GetInstance();
+	CGraphicHandler* graphicHandler = gameManager->GetGraphicHandler();
 
-	ID3D10Device* pD3DDevice = g->GetDirect3DDevice();
-	IDXGISwapChain* pSwapChain = g->GetSwapChain();
-	ID3D10RenderTargetView* pRenderTargetView = g->GetRenderTargetView();
-	ID3DX10Sprite* spriteHandler = g->GetSpriteHandler();
+	ID3D10Device* pD3DDevice = graphicHandler->GetDirect3DDevice();
+	IDXGISwapChain* pSwapChain = graphicHandler->GetSwapChain();
+	ID3D10RenderTargetView* pRenderTargetView = graphicHandler->GetRenderTargetView();
+	ID3DX10Sprite* spriteHandler = graphicHandler->GetSpriteHandler();
 
 	pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
 
 	spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
-	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
+	pD3DDevice->OMSetBlendState(graphicHandler->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 	// CGame::GetInstance()->GetCurrentScene()->Render();
 
@@ -171,9 +172,8 @@ int WINAPI WinMain(
 
 	// SetDebugWindow(hWnd);
 
-	LPGAME game = CGame::GetInstance();
-	game->Init(hWnd, hInstance);
-
+	CGameManager* gameManager = CGameManager::GetInstance();
+	gameManager->Init(hWnd, hInstance);
 
 	//IMPORTANT: this is the only place where a hardcoded file name is allowed ! 
 	// game->Load(L"mario-sample.txt");

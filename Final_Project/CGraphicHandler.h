@@ -1,30 +1,22 @@
 #pragma once
 
-#include <Windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
 
-#include "CAssets.h"
-#include "CGameObjects.h"
+#include "CTexture.h"
 
-#define DIRECTINPUT_VERSION 0x0800
-#define MAX_FRAME_RATE 100
-
-using namespace std;
-
-class CGame
+class CGraphicHandler
 {
 private:
-	static CGame* instance;
-
-	static LPASSETS assets;
-	static LPGAMEOBJECTS gameObjects;
-
+	static CGraphicHandler* instance;
+	
+	// window
 	HWND hWnd;									// Window handle
 	HINSTANCE hInstance;
 	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
 	int backBufferHeight = 0;
 
+	// directX
 	ID3D10Device* pD3DDevice = NULL;
 	IDXGISwapChain* pSwapChain = NULL;
 	ID3D10RenderTargetView* pRenderTargetView = NULL;
@@ -33,26 +25,25 @@ private:
 	ID3D10SamplerState* pPointSamplerState;
 
 public:
-	// Init DirectX, Sprite Handler
-	void Init(HWND hWnd, HINSTANCE hInstance);
-	
-	static CGame* GetInstance();
+	// game handler accessors
+	static CGraphicHandler* GetInstance();
 
-	LPASSETS GetAssetHandler();
-	LPGAMEOBJECTS GetGameObjsHandler();
-
-	int GetBackBufferWidth();
-	int GetBackBufferHeight();
-
+	// directX handlers accessors
 	ID3D10Device* GetDirect3DDevice();
 	IDXGISwapChain* GetSwapChain();
 	ID3D10RenderTargetView* GetRenderTargetView();
 	ID3DX10Sprite* GetSpriteHandler();
 	ID3D10BlendState* GetAlphaBlending();
-
 	void SetPointSamplerState();
 
-	~CGame();
+	// window size accessors
+	int GetBackBufferWidth();
+	int GetBackBufferHeight();
+
+	void Init(HWND hWnd, HINSTANCE hInstance);
+
+	void Render(float x, float y, CTexture* tex, RECT* rect, float alpha, int sprite_width, int sprite_height);
+
+	~CGraphicHandler();
 };
 
-typedef CGame* LPGAME;

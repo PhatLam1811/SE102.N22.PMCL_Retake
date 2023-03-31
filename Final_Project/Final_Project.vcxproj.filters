@@ -19,12 +19,15 @@
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{51813aae-dfee-4448-a749-97add9134532}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Assets">
+      <UniqueIdentifier>{64232da4-b499-4059-ade4-6647ee80e269}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CGame.cpp">
+    <ClCompile Include="CGameManager.cpp">
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
     <ClCompile Include="CAssets.cpp">
@@ -36,12 +39,18 @@
     <ClCompile Include="CGameObject.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CSprite.cpp">
+      <Filter>Source Files\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="CGraphicHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGame.h">
+    <ClInclude Include="CGameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAssets.h">
@@ -50,7 +59,13 @@
     <ClInclude Include="CGameObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CGameObject.h">
+    <ClInclude Include="CSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGraphicHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
