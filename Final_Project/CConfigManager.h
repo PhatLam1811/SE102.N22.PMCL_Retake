@@ -22,5 +22,7 @@ public:
 	void ParseSection_ANIMATIONS(string line);
 	void ParseSection_ASSETS(string line);
 	void ParseSection_OBJECTS(string line);
+
+	~CConfigManager();
 };
 

@@ -6,14 +6,16 @@
 #include "CSpriteManager.h"
 
 CConfigManager* CConfigManager::instance = nullptr;
-CConfigManager::CConfigManager() {}
-CConfigManager::CConfigManager(const CConfigManager* objptr) {}
 
 CConfigManager* CConfigManager::GetInstance()
 {
 	if (instance == nullptr) return new CConfigManager();
 	return instance;
 }
+
+CConfigManager::CConfigManager() { }
+CConfigManager::CConfigManager(const CConfigManager* objptr) { }
+CConfigManager::~CConfigManager() { delete this; }
 
 void CConfigManager::ParseSection_SETTINGS(string line, int& initialSceneId)
 {

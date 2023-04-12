@@ -12,18 +12,19 @@ private:
 	static CGraphicManager* instance;
 	
 	// window
-	HWND hWnd;									// Window handle
-	HINSTANCE hInstance;
+	HWND hWnd = nullptr;									// Window handle
+	HINSTANCE hInstance = nullptr;
+
 	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
 	int backBufferHeight = 0;
 
 	// directX
-	ID3D10Device* pD3DDevice = NULL;
-	IDXGISwapChain* pSwapChain = NULL;
-	ID3D10RenderTargetView* pRenderTargetView = NULL;
-	ID3D10BlendState* pBlendStateAlpha = NULL;			// To store alpha blending state
-	LPD3DX10SPRITE spriteObject;						// Sprite handling object, BIG MYSTERY: it has to be in this place OR will lead to access violation in D3D11.dll ????
-	ID3D10SamplerState* pPointSamplerState;
+	ID3D10Device* pD3DDevice = nullptr;
+	IDXGISwapChain* pSwapChain = nullptr;
+	ID3D10RenderTargetView* pRenderTargetView = nullptr;
+	ID3D10BlendState* pBlendStateAlpha = nullptr;			// To store alpha blending state
+	LPD3DX10SPRITE spriteObject = nullptr;						// Sprite handling object, BIG MYSTERY: it has to be in this place OR will lead to access violation in D3D11.dll ????
+	ID3D10SamplerState* pPointSamplerState = nullptr;
 
 	CGraphicManager();
 	CGraphicManager(const CGraphicManager*);

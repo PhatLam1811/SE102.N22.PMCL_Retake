@@ -25,6 +25,18 @@
     <Filter Include="Source Files\Graphic Objects">
       <UniqueIdentifier>{64232da4-b499-4059-ade4-6647ee80e269}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Objects">
+      <UniqueIdentifier>{d25ad8ec-3e5d-434a-9b7f-24cf1a5a6cd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphic Objects">
+      <UniqueIdentifier>{e501e79e-c1ef-4114-b8b7-709fc4e9e680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{0d6f77ad-d28c-4937-a097-1b852012f05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{302002f6-71de-45bd-970f-eab749ac70f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,50 +83,50 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSpriteManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameObjects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CGraphicManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CConfigManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameDefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimationManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CTexture.h">
+      <Filter>Header Files\Graphic Objects</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimation.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CSprite.h">
+      <Filter>Header Files\Graphic Objects</Filter>
     </ClInclude>
     <ClInclude Include="CAnimationFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphic Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>Header Files\Graphic Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObjects.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimationManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CConfigManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGraphicManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpriteManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

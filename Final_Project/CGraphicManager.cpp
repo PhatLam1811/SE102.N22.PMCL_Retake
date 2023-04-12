@@ -8,8 +8,8 @@ CGraphicManager* CGraphicManager::GetInstance()
 	return instance;
 }
 
-CGraphicManager::CGraphicManager() { return; }
-CGraphicManager::CGraphicManager(const CGraphicManager*) { return; }
+CGraphicManager::CGraphicManager() { }
+CGraphicManager::CGraphicManager(const CGraphicManager*) { }
 CGraphicManager::~CGraphicManager()
 {
 	this->pBlendStateAlpha->Release();
