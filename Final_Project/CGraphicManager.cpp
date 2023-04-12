@@ -1,20 +1,24 @@
-#include "CGraphicHandler.h"
+#include "CGraphicManager.h"
 
-CGraphicHandler* CGraphicHandler::instance = nullptr;
+CGraphicManager* CGraphicManager::instance = nullptr;
 
-CGraphicHandler* CGraphicHandler::GetInstance()
+CGraphicManager* CGraphicManager::GetInstance()
 {
-	if (instance == NULL) instance = new CGraphicHandler();
+	if (instance == nullptr) instance = new CGraphicManager();
 	return instance;
 }
 
-CGraphicHandler::~CGraphicHandler()
+CGraphicManager::CGraphicManager() { return; }
+CGraphicManager::CGraphicManager(const CGraphicManager*) { return; }
+CGraphicManager::~CGraphicManager()
 {
 	this->pBlendStateAlpha->Release();
 	this->spriteObject->Release();
 	this->pRenderTargetView->Release();
 	this->pSwapChain->Release();
 	this->pD3DDevice->Release();
+
+	delete this;
 }
 
 /*
@@ -22,7 +26,7 @@ CGraphicHandler::~CGraphicHandler()
 	rendering 2D images
 	- hWnd: Application window handle
 */
-void CGraphicHandler::Init(HWND hWnd, HINSTANCE hInstance)
+void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 {
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
@@ -162,25 +166,25 @@ void CGraphicHandler::Init(HWND hWnd, HINSTANCE hInstance)
 	return;
 }
 
-int CGraphicHandler::GetBackBufferWidth() { return this->backBufferWidth; }
-int CGraphicHandler::GetBackBufferHeight() { return this->backBufferHeight; }
+int CGraphicManager::GetBackBufferWidth() { return this->backBufferWidth; }
+int CGraphicManager::GetBackBufferHeight() { return this->backBufferHeight; }
 
-ID3D10Device* CGraphicHandler::GetDirect3DDevice() { return this->pD3DDevice; }
-IDXGISwapChain* CGraphicHandler::GetSwapChain() { return this->pSwapChain; }
-ID3D10RenderTargetView* CGraphicHandler::GetRenderTargetView() { return this->pRenderTargetView; }
-ID3DX10Sprite* CGraphicHandler::GetSpriteHandler() { return this->spriteObject; }
-ID3D10BlendState* CGraphicHandler::GetAlphaBlending() { return this->pBlendStateAlpha; }
+ID3D10Device* CGraphicManager::GetDirect3DDevice() { return this->pD3DDevice; }
+IDXGISwapChain* CGraphicManager::GetSwapChain() { return this->pSwapChain; }
+ID3D10RenderTargetView* CGraphicManager::GetRenderTargetView() { return this->pRenderTargetView; }
+ID3DX10Sprite* CGraphicManager::GetSpriteHandler() { return this->spriteObject; }
+ID3D10BlendState* CGraphicManager::GetAlphaBlending() { return this->pBlendStateAlpha; }
 
-void CGraphicHandler::SetPointSamplerState()
+void CGraphicManager::SetPointSamplerState()
 {
 	pD3DDevice->VSSetSamplers(0, 1, &pPointSamplerState);
 	pD3DDevice->GSSetSamplers(0, 1, &pPointSamplerState);
 	pD3DDevice->PSSetSamplers(0, 1, &pPointSamplerState);
 }
 
-void CGraphicHandler::Render(float x, float y, CTexture* tex, RECT* rect, float alpha, int sprite_width, int sprite_height)
+void CGraphicManager::Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height)
 {
-	if (tex == NULL) return;
+	if (texture == nullptr) return;
 
 	int spriteWidth = sprite_width;
 	int spriteHeight = sprite_height;
@@ -188,9 +192,9 @@ void CGraphicHandler::Render(float x, float y, CTexture* tex, RECT* rect, float 
 	D3DX10_SPRITE sprite;
 
 	// Set the sprite’s shader resource view
-	sprite.pTexture = tex->getShaderResourceView();
+	sprite.pTexture = texture->getShaderResourceView();
 
-	if (rect == NULL)
+	if (rect == nullptr)
 	{
 		// top-left location in U,V coords
 		sprite.TexCoord.x = 0;
@@ -200,19 +204,19 @@ void CGraphicHandler::Render(float x, float y, CTexture* tex, RECT* rect, float 
 		sprite.TexSize.x = 1.0f;
 		sprite.TexSize.y = 1.0f;
 
-		if (spriteWidth == 0) spriteWidth = tex->getWidth();
-		if (spriteHeight == 0) spriteHeight = tex->getHeight();
+		if (spriteWidth == 0) spriteWidth = texture->getWidth();
+		if (spriteHeight == 0) spriteHeight = texture->getHeight();
 	}
 	else
 	{
-		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
-		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
+		sprite.TexCoord.x = rect->left / (float)texture->getWidth();
+		sprite.TexCoord.y = rect->top / (float)texture->getHeight();
 
 		if (spriteWidth == 0) spriteWidth = (rect->right - rect->left + 1);
 		if (spriteHeight == 0) spriteHeight = (rect->bottom - rect->top + 1);
 
-		sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
-		sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
+		sprite.TexSize.x = spriteWidth / (float)texture->getWidth();
+		sprite.TexSize.y = spriteHeight / (float)texture->getHeight();
 	}
 
 	// Set the texture index. Single textures will use 0
@@ -241,4 +245,21 @@ void CGraphicHandler::Render(float x, float y, CTexture* tex, RECT* rect, float 
 	sprite.matWorld = (matScaling * matTranslation);
 
 	this->spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);
+}
+
+void CGraphicManager::Render(CSprite* sprite, float x, float y)
+{
+	D3DXMATRIX matTranslation;
+
+	x = (FLOAT)floor(x);
+	y = (FLOAT)floor(y);
+
+	// D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
+	D3DXMatrixTranslation(&matTranslation, x, this->GetBackBufferHeight() - y, 0.1f);
+
+	D3DMATRIX matWorld = sprite->GetMatScaling() * matTranslation;
+
+	sprite->SetMatWorld(matWorld);
+
+	this->GetSpriteHandler()->DrawSpritesImmediate(sprite->GetSprite(), 1, 0, 0);
 }

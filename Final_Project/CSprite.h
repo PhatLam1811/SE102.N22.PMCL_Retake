@@ -4,6 +4,7 @@
 
 class CSprite
 {
+private:
 	int id;				// Sprite ID in the sprite database
 
 	int left;
@@ -11,13 +12,16 @@ class CSprite
 	int right;
 	int bottom;
 
-	LPTEXTURE texture;
+	CTexture* texture;
 	D3DX10_SPRITE sprite;
 	D3DXMATRIX matScaling;
+
 public:
-	CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex);
+	CSprite(int id, int left, int top, int right, int bottom, CTexture* texture);
 
-	void Draw(float x, float y);
+	D3DX10_SPRITE* GetSprite();
+	D3DXMATRIX GetMatScaling();
+	void SetMatWorld(D3DXMATRIX matWorld);
+
+	void Render(float positionX, float positionY);
 };
-
-typedef CSprite* LPSPRITE;

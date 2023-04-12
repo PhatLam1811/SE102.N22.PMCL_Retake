@@ -13,13 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Handlers">
-      <UniqueIdentifier>{80feb244-ebbb-4574-aa22-1a767bf50a9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{51813aae-dfee-4448-a749-97add9134532}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Assets">
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{a69cfda8-5757-4492-bdd1-615a37a0ab78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{80feb244-ebbb-4574-aa22-1a767bf50a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphic Objects">
       <UniqueIdentifier>{64232da4-b499-4059-ade4-6647ee80e269}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -28,22 +31,40 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGameManager.cpp">
-      <Filter>Source Files\Handlers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="CAssets.cpp">
-      <Filter>Source Files\Handlers</Filter>
+    <ClCompile Include="CSpriteManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="CGameObjects.cpp">
-      <Filter>Source Files\Handlers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="CGameObject.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="CSprite.cpp">
-      <Filter>Source Files\Assets</Filter>
+      <Filter>Source Files\Graphic Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CGraphicHandler.cpp">
-      <Filter>Source Files\Handlers</Filter>
+    <ClCompile Include="CGraphicManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CConfigManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimationManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>Source Files\Graphic Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +74,7 @@
     <ClInclude Include="CGameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAssets.h">
+    <ClInclude Include="CSpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGameObjects.h">
@@ -65,7 +86,34 @@
     <ClInclude Include="CTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CGraphicHandler.h">
+    <ClInclude Include="CGraphicManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CConfigManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimationFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

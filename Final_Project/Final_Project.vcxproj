@@ -128,24 +128,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CAssets.cpp" />
+    <ClCompile Include="CAnimation.cpp" />
+    <ClCompile Include="CAnimationManager.cpp" />
+    <ClCompile Include="CSpriteManager.cpp" />
+    <ClCompile Include="CConfigManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGameObjects.cpp" />
-    <ClCompile Include="CGraphicHandler.cpp" />
+    <ClCompile Include="CGraphicManager.cpp" />
+    <ClCompile Include="CPlayScene.cpp" />
+    <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSprite.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAssets.h" />
+    <ClInclude Include="CAnimation.h" />
+    <ClInclude Include="CAnimationFrame.h" />
+    <ClInclude Include="CAnimationManager.h" />
+    <ClInclude Include="CSpriteManager.h" />
+    <ClInclude Include="CConfigManager.h" />
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGameObjects.h" />
-    <ClInclude Include="CGraphicHandler.h" />
+    <ClInclude Include="CGraphicManager.h" />
+    <ClInclude Include="CPlayScene.h" />
+    <ClInclude Include="CScene.h" />
+    <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSprite.h" />
     <ClInclude Include="CTexture.h" />
+    <ClInclude Include="GameDefine.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -57,7 +57,7 @@ void Update(DWORD dt)
 void Render()
 {
 	CGameManager* gameManager = CGameManager::GetInstance();
-	CGraphicHandler* graphicHandler = gameManager->GetGraphicHandler();
+	CGraphicManager* graphicHandler = gameManager->GetGraphicManager();
 
 	ID3D10Device* pD3DDevice = graphicHandler->GetDirect3DDevice();
 	IDXGISwapChain* pSwapChain = graphicHandler->GetSwapChain();

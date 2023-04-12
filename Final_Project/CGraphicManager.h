@@ -4,11 +4,12 @@
 #include <d3dx10.h>
 
 #include "CTexture.h"
+#include "CSprite.h"
 
-class CGraphicHandler
+class CGraphicManager
 {
 private:
-	static CGraphicHandler* instance;
+	static CGraphicManager* instance;
 	
 	// window
 	HWND hWnd;									// Window handle
@@ -24,9 +25,12 @@ private:
 	LPD3DX10SPRITE spriteObject;						// Sprite handling object, BIG MYSTERY: it has to be in this place OR will lead to access violation in D3D11.dll ????
 	ID3D10SamplerState* pPointSamplerState;
 
+	CGraphicManager();
+	CGraphicManager(const CGraphicManager*);
+
 public:
 	// game handler accessors
-	static CGraphicHandler* GetInstance();
+	static CGraphicManager* GetInstance();
 
 	// directX handlers accessors
 	ID3D10Device* GetDirect3DDevice();
@@ -42,8 +46,10 @@ public:
 
 	void Init(HWND hWnd, HINSTANCE hInstance);
 
-	void Render(float x, float y, CTexture* tex, RECT* rect, float alpha, int sprite_width, int sprite_height);
+	// Renderer
+	void Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height);
+	void Render(CSprite* sprite ,float x, float y);
 
-	~CGraphicHandler();
+	~CGraphicManager();
 };
 
