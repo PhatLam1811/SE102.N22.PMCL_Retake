@@ -16,10 +16,11 @@ CGameManager::CGameManager() { return; }
 CGameManager::CGameManager(const CGameManager*) { return; }
 CGameManager::~CGameManager() { delete this; }
 
-CGraphicManager* CGameManager::GetGraphicManager() { return CGraphicManager::GetInstance(); }
-CSceneManager* CGameManager::GetSceneManager() { return CSceneManager::GetInstance(); }
 CConfigManager* CGameManager::GetConfigManager() { return CConfigManager::GetInstance(); }
+CAssetManager* CGameManager::GetAssetManager() { return CAssetManager::GetInstance(); }
+CGraphicManager* CGameManager::GetGraphicManager() { return CGraphicManager::GetInstance(); }
 CAnimationManager* CGameManager::GetAnimationManager() { return CAnimationManager::GetInstance(); }
+CSceneManager* CGameManager::GetSceneManager() { return CSceneManager::GetInstance(); }
 
 void CGameManager::Init(HWND hWnd, HINSTANCE hInstance) { GetGraphicManager()->Init(hWnd, hInstance); }
 
@@ -54,24 +55,40 @@ void CGameManager::Load(LPCWSTR gameFile)
 		switch (section)
 		{
 		case GAME_FILE_SECTION_SETTINGS:
+		{
 			int initialSceneId;
 
 			GetConfigManager()->ParseSection_SETTINGS(line, initialSceneId);
-			GetSceneManager()->SetCurrentSceneId(initialSceneId); break;
+			GetSceneManager()->SetCurrentSceneId(initialSceneId);
+
+			break;
+		}
 
 		case GAME_FILE_SECTION_SCENES:
-			int sceneId; 
-			wstring scenePath;
+		{
+			int sceneId; wstring scenePath;
 
 			GetConfigManager()->ParseSection_SCENES(line, sceneId, scenePath);
-			GetSceneManager()->AddScene(sceneId, scenePath); break;
+			GetSceneManager()->AddScene(sceneId, scenePath);
 
-			// case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+			break;
+		}
+
+		case GAME_FILE_SECTION_TEXTURES:
+		{
+			GetConfigManager()->ParseSection_TEXTURES(line); 
+			
+			break;
+		}
 		}
 	}
 	f.close();
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+
+	DebugOut(L"[INFO] Loaded textures : %zu\n", GetAssetManager()->GetTexturesCount());
+
+	DebugOut(L"[INFO] Loaded scenes : %zu\n", GetSceneManager()->GetScenesCount());
 
 	// SwitchScene();
 }

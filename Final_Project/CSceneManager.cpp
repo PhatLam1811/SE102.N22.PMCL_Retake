@@ -9,13 +9,18 @@ CSceneManager* CSceneManager::GetInstance()
 	return instance;
 }
 
-CSceneManager::CSceneManager() { return; }
-CSceneManager::CSceneManager(const CSceneManager*) { return; }
+CSceneManager::CSceneManager() { this->currentSceneId = -1; }
+CSceneManager::CSceneManager(const CSceneManager*) { this->currentSceneId = -1; }
 CSceneManager::~CSceneManager() { delete this; }
 
-int CSceneManager::GetCurrentSceneId() { return currentSceneId; }
-void CSceneManager::SetCurrentSceneId(int id) { currentSceneId = id; }
-CScene* CSceneManager::GetCurrentScene() { return scenes[currentSceneId]; }
+int CSceneManager::GetCurrentSceneId() { return this->currentSceneId; }
+void CSceneManager::SetCurrentSceneId(int id) { this->currentSceneId = id; }
+CScene* CSceneManager::GetCurrentScene() { return this->scenes[currentSceneId]; }
+
+CScene* CSceneManager::GetScene(int sceneId)
+{
+	return this->scenes[sceneId];
+}
 
 void CSceneManager::AddScene(int sceneId, wstring filePath)
 {
@@ -25,7 +30,7 @@ void CSceneManager::AddScene(int sceneId, wstring filePath)
 
 void CSceneManager::ChangeScene(int nextSceneId)
 {
-	currentSceneId = nextSceneId;
+	this->currentSceneId = nextSceneId;
 
 	// unload scene...
 }

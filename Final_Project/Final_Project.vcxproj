@@ -130,7 +130,7 @@
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimationManager.cpp" />
-    <ClCompile Include="CSpriteManager.cpp" />
+    <ClCompile Include="CAssetManager.cpp" />
     <ClCompile Include="CConfigManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
@@ -149,7 +149,7 @@
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimationFrame.h" />
     <ClInclude Include="CAnimationManager.h" />
-    <ClInclude Include="CSpriteManager.h" />
+    <ClInclude Include="CAssetManager.h" />
     <ClInclude Include="CConfigManager.h" />
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGameObjects.h" />

@@ -1,5 +1,5 @@
 #include "CAnimation.h"
-#include "CSpriteManager.h"
+#include "CAssetManager.h"
 #include "Utils.h"
 
 CAnimation::CAnimation(int defaultDuration)
@@ -14,7 +14,7 @@ void CAnimation::Add(int spriteId, DWORD duration)
 	int frameDuration = duration;
 	if (duration == 0) frameDuration = this->defaultDuration;
 
-	CSprite* sprite = CSpriteManager::GetInstance()->GetSprite(spriteId);
+	CSprite* sprite = CAssetManager::GetInstance()->GetSprite(spriteId);
 
 	if (sprite == nullptr)
 		DebugOut(L"[ERROR] Sprite ID %d not found!\n", spriteId);

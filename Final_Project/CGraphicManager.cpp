@@ -1,4 +1,5 @@
 #include "CGraphicManager.h"
+#include "Utils.h"
 
 CGraphicManager* CGraphicManager::instance = nullptr;
 
@@ -35,10 +36,10 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 	RECT r;
 	GetClientRect(hWnd, &r);
 
-	backBufferWidth = r.right + 1;
-	backBufferHeight = r.bottom + 1;
+	this->backBufferWidth = r.right + 1;
+	this->backBufferHeight = r.bottom + 1;
 
-	// DebugOut(L"[INFO] Window's client area: width= %d, height= %d\n", r.right - 1, r.bottom - 1);
+	DebugOut(L"[INFO] Window's client area: width= %d, height= %d\n", r.right - 1, r.bottom - 1);
 
 	// Create & clear the DXGI_SWAP_CHAIN_DESC structure
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
@@ -46,8 +47,8 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 
 	// Fill in the needed values
 	swapChainDesc.BufferCount = 1;
-	swapChainDesc.BufferDesc.Width = backBufferWidth;
-	swapChainDesc.BufferDesc.Height = backBufferHeight;
+	swapChainDesc.BufferDesc.Width = this->backBufferWidth;
+	swapChainDesc.BufferDesc.Height = this->backBufferHeight;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -64,46 +65,46 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 		0,
 		D3D10_SDK_VERSION,
 		&swapChainDesc,
-		&pSwapChain,
-		&pD3DDevice);
+		&this->pSwapChain,
+		&this->pD3DDevice);
 
 	if (hr != S_OK)
 	{
-		// DebugOut((wchar_t*)L"[ERROR] D3D10CreateDeviceAndSwapChain has failed %s %d", _W(__FILE__), __LINE__);
+		DebugOut((wchar_t*)L"[ERROR] D3D10CreateDeviceAndSwapChain has failed %s %d", _W(__FILE__), __LINE__);
 		return;
 	}
 
 	// Get the back buffer from the swapchain
 	ID3D10Texture2D* pBackBuffer;
-	hr = pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBackBuffer);
+	hr = this->pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBackBuffer);
 	if (hr != S_OK)
 	{
-		// DebugOut((wchar_t*)L"[ERROR] pSwapChain->GetBuffer has failed %s %d", _W(__FILE__), __LINE__);
+		DebugOut((wchar_t*)L"[ERROR] pSwapChain->GetBuffer has failed %s %d", _W(__FILE__), __LINE__);
 		return;
 	}
 
 	// create the render target view
-	hr = pD3DDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+	hr = this->pD3DDevice->CreateRenderTargetView(pBackBuffer, nullptr, &this->pRenderTargetView);
 
 	pBackBuffer->Release();
 	if (hr != S_OK)
 	{
-		// DebugOut((wchar_t*)L"[ERROR] CreateRenderTargetView has failed %s %d", _W(__FILE__), __LINE__);
+		DebugOut((wchar_t*)L"[ERROR] CreateRenderTargetView has failed %s %d", _W(__FILE__), __LINE__);
 		return;
 	}
 
 	// set the render target
-	pD3DDevice->OMSetRenderTargets(1, &pRenderTargetView, NULL);
+	this->pD3DDevice->OMSetRenderTargets(1, &this->pRenderTargetView, nullptr);
 
 	// create and set the viewport
 	D3D10_VIEWPORT viewPort;
-	viewPort.Width = backBufferWidth;
-	viewPort.Height = backBufferHeight;
+	viewPort.Width = this->backBufferWidth;
+	viewPort.Height = this->backBufferHeight;
 	viewPort.MinDepth = 0.0f;
 	viewPort.MaxDepth = 1.0f;
 	viewPort.TopLeftX = 0;
 	viewPort.TopLeftY = 0;
-	pD3DDevice->RSSetViewports(1, &viewPort);
+	this->pD3DDevice->RSSetViewports(1, &viewPort);
 
 	//
 	//
@@ -124,14 +125,14 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 	desc.MinLOD = -FLT_MAX;
 	desc.MaxLOD = FLT_MAX;
 
-	pD3DDevice->CreateSamplerState(&desc, &this->pPointSamplerState);
+	this->pD3DDevice->CreateSamplerState(&desc, &this->pPointSamplerState);
 
 	// create the sprite object to handle sprite drawing 
-	hr = D3DX10CreateSprite(pD3DDevice, 0, &spriteObject);
+	hr = D3DX10CreateSprite(this->pD3DDevice, 0, &this->spriteObject);
 
 	if (hr != S_OK)
 	{
-		// DebugOut((wchar_t*)L"[ERROR] D3DX10CreateSprite has failed %s %d", _W(__FILE__), __LINE__);
+		DebugOut((wchar_t*)L"[ERROR] D3DX10CreateSprite has failed %s %d", _W(__FILE__), __LINE__);
 		return;
 	}
 
@@ -159,9 +160,9 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 	StateDesc.DestBlendAlpha = D3D10_BLEND_ZERO;
 	StateDesc.BlendOpAlpha = D3D10_BLEND_OP_ADD;
 	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
-	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
+	this->pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
-	// DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
+	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
 	return;
 }
@@ -177,9 +178,9 @@ ID3D10BlendState* CGraphicManager::GetAlphaBlending() { return this->pBlendState
 
 void CGraphicManager::SetPointSamplerState()
 {
-	pD3DDevice->VSSetSamplers(0, 1, &pPointSamplerState);
-	pD3DDevice->GSSetSamplers(0, 1, &pPointSamplerState);
-	pD3DDevice->PSSetSamplers(0, 1, &pPointSamplerState);
+	this->pD3DDevice->VSSetSamplers(0, 1, &this->pPointSamplerState);
+	this->pD3DDevice->GSSetSamplers(0, 1, &this->pPointSamplerState);
+	this->pD3DDevice->PSSetSamplers(0, 1, &this->pPointSamplerState);
 }
 
 void CGraphicManager::Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height)

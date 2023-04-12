@@ -45,7 +45,7 @@
     <ClCompile Include="CGameManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="CSpriteManager.cpp">
+    <ClCompile Include="CAssetManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="CGameObjects.cpp">
@@ -125,7 +125,7 @@
     <ClInclude Include="CSceneManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="CSpriteManager.h">
+    <ClInclude Include="CAssetManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>

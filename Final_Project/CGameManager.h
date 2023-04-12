@@ -1,9 +1,10 @@
 #pragma once
 
-#include "CGraphicManager.h"
-#include "CSceneManager.h"
 #include "CConfigManager.h"
+#include "CAssetManager.h"
+#include "CGraphicManager.h"
 #include "CAnimationManager.h"
+#include "CSceneManager.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #define MAX_FRAME_RATE 100
@@ -22,10 +23,11 @@ public:
 	static CGameManager* GetInstance();
 
 	// accessors
-	static CGraphicManager* GetGraphicManager();
-	static CSceneManager* GetSceneManager();
 	static CConfigManager* GetConfigManager();
+	static CAssetManager* GetAssetManager();
+	static CGraphicManager* GetGraphicManager();
 	static CAnimationManager* GetAnimationManager();
+	static CSceneManager* GetSceneManager();
 
 	void Init(HWND hWnd, HINSTANCE hInstance);
 	void Load(LPCWSTR gameFile);

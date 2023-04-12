@@ -24,10 +24,11 @@ public:
 	int GetCurrentSceneId();
 	void SetCurrentSceneId(int id);
 
+	size_t GetScenesCount() { return scenes.size(); }
+
 	CScene* GetCurrentScene();
-
+	CScene* GetScene(int sceneId);
 	void AddScene(int sceneId, wstring scenePath); // play scene
-
 	void ChangeScene(int nextSceneId);
 
 	~CSceneManager();

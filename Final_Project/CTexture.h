@@ -13,11 +13,12 @@ protected:
 	ID3D10ShaderResourceView* _rsview;
 	int _width;
 	int _height;
+
 public:
 	CTexture()
 	{
-		_tex = NULL;
-		_rsview = NULL;
+		_tex = nullptr;
+		_rsview = nullptr;
 		_width = -1;
 		_height = -1;
 	}
@@ -42,5 +43,7 @@ public:
 	{
 		if (_rsview != nullptr) this->_rsview->Release();
 		if (_tex != nullptr) this->_tex->Release();
+
+		delete this;
 	}
 };

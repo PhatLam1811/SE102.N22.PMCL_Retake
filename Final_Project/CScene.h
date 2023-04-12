@@ -19,7 +19,7 @@ public:
 		this->filePath = filePath;
 	}
 
-	virtual void GetCamPos(float &cameraX, float &cameraY) { /* cameraX = 0f; cameraY = 0f; */ }
+	virtual void GetCamPos(float &cameraX, float &cameraY) { cameraX = 0.0f; cameraY = 0.0f; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
