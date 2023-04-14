@@ -75,6 +75,9 @@
     <ClCompile Include="CBaseGameObject.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -123,6 +126,9 @@
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="CBaseGameObject.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera.h">
       <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
   </ItemGroup>

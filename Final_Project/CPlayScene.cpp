@@ -9,6 +9,8 @@
 CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath)
 {
 	// subscribe to input manager
+	CCamera* mainCamera = new CCamera();
+	this->gameObjects.push_back(mainCamera);
 }
 
 void CPlayScene::Load()

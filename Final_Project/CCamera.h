@@ -4,5 +4,6 @@
 
 class CCamera : public CBaseGameObject
 {
+
 };
 

@@ -86,9 +86,9 @@ void CGameManager::Load(LPCWSTR gameFile)
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
 
-	DebugOut(L"[INFO] Loaded textures : %zu\n", GetAssetManager()->GetTexturesCount());
+	DebugOut(L"[INFO] Buffer width : %zu\n", GetGraphicManager()->GetBackBufferWidth());
 
-	DebugOut(L"[INFO] Loaded scenes : %zu\n", GetSceneManager()->GetScenesCount());
+	DebugOut(L"[INFO] Buffer height : %zu\n", GetGraphicManager()->GetBackBufferHeight());
 
 	// SwitchScene();
 }
