@@ -21,6 +21,7 @@ CAssetManager* CGameManager::GetAssetManager() { return CAssetManager::GetInstan
 CGraphicManager* CGameManager::GetGraphicManager() { return CGraphicManager::GetInstance(); }
 CAnimationManager* CGameManager::GetAnimationManager() { return CAnimationManager::GetInstance(); }
 CSceneManager* CGameManager::GetSceneManager() { return CSceneManager::GetInstance(); }
+CInputManager* CGameManager::GetInputManager() { return CInputManager::GetInstance(); }
 
 void CGameManager::Init(HWND hWnd, HINSTANCE hInstance) { GetGraphicManager()->Init(hWnd, hInstance); }
 
