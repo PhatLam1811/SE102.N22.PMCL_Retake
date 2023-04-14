@@ -2,6 +2,9 @@
 
 #include <Windows.h>
 
+#include "CBaseGameObject.h"
+#include "CCamera.h"
+
 using namespace std;
 
 class CScene
@@ -10,13 +13,16 @@ protected:
 	int id;
 	wstring filePath;
 	
-	// vector<CGameObject*> gameObjs;
+	vector<CBaseGameObject*> gameObjects;
 
 public:
 	CScene(int sceneId, wstring filePath)
 	{
 		this->id = sceneId;
 		this->filePath = filePath;
+
+		CCamera* mainCamera = new CCamera();
+		this->gameObjects.push_back(mainCamera);
 	}
 
 	virtual void GetCamPos(float &cameraX, float &cameraY) { cameraX = 0.0f; cameraY = 0.0f; }

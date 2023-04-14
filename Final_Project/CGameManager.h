@@ -32,5 +32,6 @@ public:
 	void Init(HWND hWnd, HINSTANCE hInstance);
 	void Load(LPCWSTR gameFile);
 
+
 	~CGameManager();
 };

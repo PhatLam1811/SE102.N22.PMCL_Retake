@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -133,8 +133,7 @@
     <ClCompile Include="CAssetManager.cpp" />
     <ClCompile Include="CConfigManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
-    <ClCompile Include="CGameObject.cpp" />
-    <ClCompile Include="CGameObjects.cpp" />
+    <ClCompile Include="CBaseGameObject.cpp" />
     <ClCompile Include="CGraphicManager.cpp" />
     <ClCompile Include="CPlayScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
@@ -152,7 +151,7 @@
     <ClInclude Include="CAssetManager.h" />
     <ClInclude Include="CConfigManager.h" />
     <ClInclude Include="CGameManager.h" />
-    <ClInclude Include="CGameObjects.h" />
+    <ClInclude Include="CBaseGameObject.h" />
     <ClInclude Include="CGraphicManager.h" />
     <ClInclude Include="CPlayScene.h" />
     <ClInclude Include="CScene.h" />

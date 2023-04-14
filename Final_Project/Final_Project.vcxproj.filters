@@ -48,12 +48,6 @@
     <ClCompile Include="CAssetManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="CGameObjects.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="CGameObject.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CSprite.cpp">
       <Filter>Source Files\Graphic Objects</Filter>
     </ClCompile>
@@ -78,6 +72,9 @@
     <ClCompile Include="CAnimation.cpp">
       <Filter>Source Files\Graphic Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CBaseGameObject.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -100,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="CAnimation.h">
       <Filter>Header Files\Graphic Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameObjects.h">
-      <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>Header Files\Scenes</Filter>
@@ -127,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="CAssetManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="CBaseGameObject.h">
+      <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
