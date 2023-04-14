@@ -59,7 +59,7 @@ void CGameManager::Load(LPCWSTR gameFile)
 			int initialSceneId;
 
 			GetConfigManager()->ParseSection_SETTINGS(line, initialSceneId);
-			GetSceneManager()->SetCurrentSceneId(initialSceneId);
+			GetSceneManager()->SetCurrentScene(initialSceneId);
 
 			break;
 		}
@@ -85,10 +85,6 @@ void CGameManager::Load(LPCWSTR gameFile)
 	f.close();
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-
-	DebugOut(L"[INFO] Buffer width : %zu\n", GetGraphicManager()->GetBackBufferWidth());
-
-	DebugOut(L"[INFO] Buffer height : %zu\n", GetGraphicManager()->GetBackBufferHeight());
-
-	// SwitchScene();
 }
+
+void CGameManager::Start() { GetSceneManager()->GetCurrentScene()->Load(); }

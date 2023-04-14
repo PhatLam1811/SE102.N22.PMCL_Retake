@@ -71,7 +71,7 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(graphicHandler->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	// CGame::GetInstance()->GetCurrentScene()->Render();
+	gameManager->GetSceneManager()->GetCurrentScene()->Render();
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
@@ -130,6 +130,8 @@ int Run()
 	int done = 0;
 	ULONGLONG frameStart = GetTickCount64();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+
+	CGameManager::GetInstance()->Start();
 
 	while (!done)
 	{

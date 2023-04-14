@@ -5,7 +5,6 @@
 #include "GameDefine.h"
 #include "Utils.h"
 
-
 CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath)
 {
 	// subscribe to input manager
@@ -53,10 +52,12 @@ void CPlayScene::Unload()
 	return;
 }
 
-void CPlayScene::Update(DWORD dt)
-{
-}
+void CPlayScene::Update(DWORD dt) { }
 
 void CPlayScene::Render()
 {
+	for (int i = 0; i < this->gameObjects.size(); i++)
+	{
+		this->gameObjects[i]->Render();
+	}
 }

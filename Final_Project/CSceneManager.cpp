@@ -14,7 +14,7 @@ CSceneManager::CSceneManager(const CSceneManager*) { this->currentSceneId = -1; 
 CSceneManager::~CSceneManager() { delete this; }
 
 int CSceneManager::GetCurrentSceneId() { return this->currentSceneId; }
-void CSceneManager::SetCurrentSceneId(int id) { this->currentSceneId = id; }
+void CSceneManager::SetCurrentScene(int id) { this->currentSceneId = id; }
 CScene* CSceneManager::GetCurrentScene() { return this->scenes[currentSceneId]; }
 
 CScene* CSceneManager::GetScene(int sceneId)

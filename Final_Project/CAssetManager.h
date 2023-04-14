@@ -28,9 +28,6 @@ public:
 
 	void AddSprite(int spriteId, int left, int top, int right, int bottom, int textureId);
 	CSprite* GetSprite(int spriteId);
-
-	size_t GetTexturesCount() { return this->textures.size(); }
-	size_t GetSpritesCount() { return this->sprites.size(); }
 	
 	void Clear();
 

@@ -16,8 +16,8 @@ public:
 	float GetPositionX();
 	float GetPositionY();
 
-	virtual void Update(DWORD elapsedTime);
-	virtual void Render();
+	virtual void Update(DWORD elapsedTime) = 0;
+	virtual void Render() = 0;
 
 	~CBaseGameObject();
 };

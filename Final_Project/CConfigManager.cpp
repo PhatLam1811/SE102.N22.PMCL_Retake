@@ -3,6 +3,7 @@
 #include "CAssetManager.h"
 #include "CAnimationManager.h"
 #include "CAnimation.h"
+#include "GameDefine.h"
 #include "Utils.h"
 
 CConfigManager* CConfigManager::instance = nullptr;
@@ -25,7 +26,7 @@ void CConfigManager::ParseSection_SETTINGS(string line, int& initialSceneId)
 	if (tokens[0] == "start")
 	{
 		initialSceneId = atoi(tokens[1].c_str());
-		CSceneManager::GetInstance()->SetCurrentSceneId(initialSceneId);
+		CSceneManager::GetInstance()->SetCurrentScene(initialSceneId);
 	}
 	else
 		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
@@ -118,19 +119,20 @@ void CConfigManager::ParseSection_OBJECTS(string line)
 
 	CBaseGameObject* gameObject = nullptr;
 
-	//switch (object_type)
-	//{
-	//case OBJECT_TYPE_MARIO:
-	//	if (player != NULL)
-	//	{
-	//		DebugOut(L"[ERROR] MARIO object was created before!\n");
-	//		return;
-	//	}
-	//	obj = new CMario(x, y);
-	//	player = (CMario*)obj;
+	switch (object_type)
+	{
+	case OBJECT_TYPE_MARIO:
+		//if (player != NULL)
+		//{
+		//	DebugOut(L"[ERROR] MARIO object was created before!\n");
+		//	return;
+		//}
+		//obj = new CMario(x, y);
+		//player = (CMario*)obj;
 
-	//	DebugOut(L"[INFO] Player object has been created!\n");
-	//	break;
+		DebugOut(L"[INFO] Player object has been created!\n");
+		break;
+
 	//case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	//case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	//case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
@@ -164,10 +166,10 @@ void CConfigManager::ParseSection_OBJECTS(string line)
 	//break;
 
 
-	//default:
-	//	DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
-	//	return;
-	//}
+	default:
+		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
+		return;
+	}
 
 	// General object setup
 	gameObject->SetPosition(x, y);

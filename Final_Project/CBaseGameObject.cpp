@@ -7,12 +7,4 @@ void CBaseGameObject::SetPositionY(float y) { this->y = y; }
 float CBaseGameObject::GetPositionX() { return this->x; }
 float CBaseGameObject::GetPositionY() { return this->y; }
 
-void CBaseGameObject::Update(DWORD elapsedTime)
-{
-}
-
-void CBaseGameObject::Render()
-{
-}
-
 CBaseGameObject::~CBaseGameObject() { delete this; }

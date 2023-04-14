@@ -137,6 +137,7 @@
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CBaseGameObject.cpp" />
     <ClCompile Include="CGraphicManager.cpp" />
+    <ClCompile Include="CMario.cpp" />
     <ClCompile Include="CPlayScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSprite.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CBaseGameObject.h" />
     <ClInclude Include="CGraphicManager.h" />
+    <ClInclude Include="CMario.h" />
     <ClInclude Include="CPlayScene.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
