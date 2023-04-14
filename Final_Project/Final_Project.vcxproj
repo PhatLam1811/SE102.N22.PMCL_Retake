@@ -131,6 +131,7 @@
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimationManager.cpp" />
     <ClCompile Include="CAssetManager.cpp" />
+    <ClCompile Include="CBaseCharacter.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CConfigManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="CAnimationFrame.h" />
     <ClInclude Include="CAnimationManager.h" />
     <ClInclude Include="CAssetManager.h" />
+    <ClInclude Include="CBaseCharacter.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CConfigManager.h" />
     <ClInclude Include="CGameManager.h" />

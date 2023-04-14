@@ -54,6 +54,39 @@ void CConfigManager::ParseSection_TEXTURES(string line)
 	CAssetManager::GetInstance()->AddTexture(textureId, path.c_str());
 }
 
+void CConfigManager::ParseSection_ASSETS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 1) return;
+
+	wstring path = ToWSTR(tokens[0]);
+
+	CAssetManager::GetInstance()->LoadAssets(path.c_str());
+}
+
+void CConfigManager::ParseSection_ANIMATIONS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
+
+	DebugOut(L"--> %s\n", ToWSTR(line).c_str());
+
+	CAnimation* ani = new CAnimation();
+
+	int ani_id = atoi(tokens[0].c_str());
+
+	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	{
+		int sprite_id = atoi(tokens[i].c_str());
+		int frame_time = atoi(tokens[i + 1].c_str());
+		ani->Add(sprite_id, frame_time);
+	}
+
+	CAnimationManager::GetInstance()->Add(ani_id, ani);
+}
+
 void CConfigManager::ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
@@ -70,31 +103,20 @@ void CConfigManager::ParseSection_SPRITES(string line)
 	 CAssetManager::GetInstance()->AddSprite(spriteId, l, t, r, b, textureId);
 }
 
-void CConfigManager::ParseSection_ASSETS(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 1) return;
-
-	wstring path = ToWSTR(tokens[0]);
-
-	CAssetManager::GetInstance()->LoadAssets(path.c_str());
-}
-
 void CConfigManager::ParseSection_OBJECTS(string line)
 {
 	DebugOut(L"ParseSection_OBJECTS entered!!!!");
 
-	//vector<string> tokens = split(line);
+	vector<string> tokens = split(line);
 
-	//// skip invalid lines - an object set must have at least id, x, y
-	//if (tokens.size() < 2) return;
+	// skip invalid lines - an object set must have at least id, x, y
+	if (tokens.size() < 2) return;
 
-	//int object_type = atoi(tokens[0].c_str());
-	//float x = (float)atof(tokens[1].c_str());
-	//float y = (float)atof(tokens[2].c_str());
+	int object_type = atoi(tokens[0].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
-	//CGameObject* obj = NULL;
+	CBaseGameObject* gameObject = nullptr;
 
 	//switch (object_type)
 	//{
@@ -147,31 +169,9 @@ void CConfigManager::ParseSection_OBJECTS(string line)
 	//	return;
 	//}
 
-	//// General object setup
-	//obj->SetPosition(x, y);
+	// General object setup
+	gameObject->SetPosition(x, y);
 
 
 	//objects.push_back(obj);
-}
-
-void CConfigManager::ParseSection_ANIMATIONS(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
-
-	DebugOut(L"--> %s\n",ToWSTR(line).c_str());
-
-	CAnimation* ani = new CAnimation();
-
-	int ani_id = atoi(tokens[0].c_str());
-
-	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
-	{
-		int sprite_id = atoi(tokens[i].c_str());
-		int frame_time = atoi(tokens[i + 1].c_str());
-		ani->Add(sprite_id, frame_time);
-	}
-
-	CAnimationManager::GetInstance()->Add(ani_id, ani);
 }
