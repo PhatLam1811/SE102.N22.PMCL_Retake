@@ -1,5 +1,7 @@
 #include <fstream>
 
+#include "CMario.h"
+
 #include "CPlayScene.h"
 #include "CConfigManager.h"
 #include "GameDefine.h"
@@ -8,16 +10,16 @@
 CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath)
 {
 	// subscribe to input manager
-	CCamera* mainCamera = new CCamera();
-	this->gameObjects.push_back(mainCamera);
+
+	this->isMarioLoaded = false;
 }
 
 void CPlayScene::Load()
 {
-	DebugOut(L"[INFO] Start loading scene from : %s \n", filePath);
+	DebugOut(L"[INFO] Start loading scene from : %s \n", this->filePath);
 
 	ifstream f;
-	f.open(filePath);
+	f.open(this->filePath);
 
 	// current resource section flag
 	int section = SCENE_SECTION_UNKNOWN;
@@ -44,7 +46,73 @@ void CPlayScene::Load()
 
 	f.close();
 
-	DebugOut(L"[INFO] Done loading scene  %s\n", filePath);
+	DebugOut(L"[INFO] Done loading scene  %s\n", this->filePath);
+
+	DebugOut(L"[INFO] Scene game objects size : %zu\n", this->gameObjects.size());
+}
+
+void CPlayScene::AddGameObject(int objectId, float x, float y)
+{
+	CBaseGameObject* gameObject = nullptr;
+
+	switch (objectId)
+	{
+	case OBJECT_TYPE_MARIO:
+		if (this->isMarioLoaded)
+		{
+			DebugOut(L"[ERROR] MARIO object was loaded before!\n");
+			return;
+		}
+
+		gameObject = new CMario(x, y);
+		
+		this->isMarioLoaded = true;
+
+		DebugOut(L"[INFO] Mario has been loaded!\n");
+		
+		break;
+
+		//case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
+		//case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
+		//case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+
+		//case OBJECT_TYPE_PLATFORM:
+		//{
+
+		//	float cell_width = (float)atof(tokens[3].c_str());
+		//	float cell_height = (float)atof(tokens[4].c_str());
+		//	int length = atoi(tokens[5].c_str());
+		//	int sprite_begin = atoi(tokens[6].c_str());
+		//	int sprite_middle = atoi(tokens[7].c_str());
+		//	int sprite_end = atoi(tokens[8].c_str());
+
+		//	obj = new CPlatform(
+		//		x, y,
+		//		cell_width, cell_height, length,
+		//		sprite_begin, sprite_middle, sprite_end
+		//	);
+
+		//	break;
+		//}
+
+		//case OBJECT_TYPE_PORTAL:
+		//{
+		//	float r = (float)atof(tokens[3].c_str());
+		//	float b = (float)atof(tokens[4].c_str());
+		//	int scene_id = atoi(tokens[5].c_str());
+		//	obj = new CPortal(x, y, r, b, scene_id);
+		//}
+		//break;
+
+
+	default:
+		DebugOut(L"[ERROR] Invalid object type: %d\n", objectId); return;
+	}
+
+	// General object setup
+	gameObject->SetPosition(x, y);
+
+	this->gameObjects.push_back(gameObject);
 }
 
 void CPlayScene::Unload()

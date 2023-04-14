@@ -8,4 +8,5 @@ mario.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	20	10
+0	100	100
+0	30	100
