@@ -133,9 +133,9 @@ void CPlayScene::Render()
 	}
 }
 
-void CPlayScene::OnKeyDown(BYTE* keyStates)
+void CPlayScene::OnKeyDown(int keyCode)
 {
-	DebugOut(L"On key down : %i\n", keyStates);
+	DebugOut(L"On key down : %i\n", keyCode);
 }
 
 void CPlayScene::OnKeyPress(int keyCode)

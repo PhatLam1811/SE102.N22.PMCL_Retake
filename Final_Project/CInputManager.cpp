@@ -91,11 +91,11 @@ void CInputManager::UnAssignKeyInputCallback(IKeyInputProcessable* processor)
 		this->keyProcessors.end());
 }
 
-void CInputManager::OnKeyDownCallback(BYTE* keyStates)
+void CInputManager::OnKeyDownCallback(int keyCode)
 {
 	for (auto processor : this->keyProcessors)
 	{
-		processor->OnKeyDown(keyStates);
+		processor->OnKeyDown(keyCode);
 	}
 }
 
@@ -115,29 +115,19 @@ void CInputManager::OnKeyUpCallback(int keyCode)
 	}
 }
 
-//void CInputManager::AssignOnKeyDownCallbacks(void(CScene::*callback)(BYTE*))
-//{
-//	this->DetachOnKeyDownCallbacks(callback);
-//	this->onKeyDownCallBacks.push_back(callback);
-//}
-//
-//void CInputManager::DetachOnKeyDownCallbacks(void(CScene::*callback)(BYTE*))
-//{
-//	this->onKeyDownCallBacks.erase(
-//		::remove_if(
-//			this->onKeyDownCallBacks.begin(),
-//			this->onKeyDownCallBacks.end(),
-//			callback),
-//		this->onKeyDownCallBacks.end());
-//}
-//
-//void CInputManager::InvokeOnKeyDownCallbacks(BYTE* keyState)
-//{
-//	for (int i = 0; i < this->onKeyDownCallBacks.size(); i++)
-//	{
-//		this->onKeyDownCallBacks[i];
-//	}
-//}
+bool CInputManager::IsKeyDown(int KeyCode)
+{
+	return (this->keyStates[KeyCode] & 0x80) > 0;
+}
+
+void CInputManager::ProcessKeyDown()
+{
+	if (this->IsKeyDown(DIK_A))
+		this->OnKeyDownCallback(DIK_A);
+
+	if (this->IsKeyDown(DIK_S))
+		this->OnKeyDownCallback(DIK_S);
+}
 
 void CInputManager::ProcessInput()
 {
@@ -165,7 +155,8 @@ void CInputManager::ProcessInput()
 		}
 	}
 
-	this->OnKeyDownCallback(this->keyStates);
+	this->ProcessKeyDown();
+	// this->OnKeyDownCallback(this->keyStates);
 	// this->KeyState((BYTE*)&keyStates);
 
 	// Collect all buffered events

@@ -19,7 +19,7 @@ public:
 	virtual void Render();
 
 	// Inherited via OnInputCallback
-	virtual void OnKeyDown(BYTE* keyStates) override;
-	virtual void OnKeyPress(int keyCode) override;
-	virtual void OnKeyUp(int keyCode) override;
+	virtual void OnKeyDown(int keyCode);
+	virtual void OnKeyPress(int keyCode);
+	virtual void OnKeyUp(int keyCode);
 };
