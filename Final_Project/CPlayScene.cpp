@@ -134,7 +134,7 @@ void CPlayScene::Render()
 }
 
 void CPlayScene::OnKeyDown(int keyCode)
-{
+{		
 	DebugOut(L"On key down : %i\n", keyCode);
 }
 

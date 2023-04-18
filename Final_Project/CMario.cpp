@@ -7,8 +7,14 @@ CMario::CMario(float x, float y)
 	this->y = y;
 }
 
+void CMario::Move(int direction)
+{
+	this->ax += this->speedIncrement * direction;
+}
+
 void CMario::Update(DWORD elapsedTime)
 {
+	this->vx += this->ax * this->speed * elapsedTime;
 	return;
 }
 
