@@ -15,6 +15,8 @@ protected:
 	int id;
 	wstring filePath;
 	
+	CCamera* camera;
+
 	vector<CBaseGameObject*> gameObjects;
 
 public:
@@ -24,8 +26,7 @@ public:
 		this->filePath = filePath;
 
 		// a scene will always have its camera 
-		CCamera* mainCamera = new CCamera();
-		this->gameObjects.push_back(mainCamera);
+		this->camera = new CCamera();
 	}
 
 	virtual void GetCamPos(float &cameraX, float &cameraY) { cameraX = 0.0f; cameraY = 0.0f; }

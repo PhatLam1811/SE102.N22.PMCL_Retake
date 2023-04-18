@@ -1,12 +1,14 @@
 #pragma once
 
+#include "CMario.h"
+
 #include "CScene.h"
 #include "CInputManager.h"
 
 class CPlayScene : public CScene, public IKeyInputProcessable
 {
 private:
-	bool isMarioLoaded;
+	CMario* player;
 
 public:
 	CPlayScene(int sceneId, wstring filePath);

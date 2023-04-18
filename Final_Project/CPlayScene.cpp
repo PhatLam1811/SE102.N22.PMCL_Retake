@@ -1,7 +1,5 @@
 #include <fstream>
 
-#include "CMario.h"
-
 #include "CPlayScene.h"
 #include "CConfigManager.h"
 #include "GameDefine.h"
@@ -9,9 +7,9 @@
 
 CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath)
 {
-	// subscribe to input manager
+	this->player = nullptr;
 
-	this->isMarioLoaded = false;
+	CInputManager::GetInstance()->AssignKeyInputCallback(this);
 }
 
 void CPlayScene::Load()
@@ -46,8 +44,6 @@ void CPlayScene::Load()
 
 	f.close();
 
-	CInputManager::GetInstance()->AssignKeyInputCallback(this);
-
 	DebugOut(L"[INFO] Done loading scene  %s\n", this->filePath);
 
 	DebugOut(L"[INFO] Scene game objects size : %zu\n", this->gameObjects.size());
@@ -60,15 +56,14 @@ void CPlayScene::AddGameObject(int objectId, float x, float y)
 	switch (objectId)
 	{
 	case OBJECT_TYPE_MARIO:
-		if (this->isMarioLoaded)
+		if (this->player != nullptr)
 		{
 			DebugOut(L"[ERROR] MARIO object was loaded before!\n");
 			return;
 		}
 
 		gameObject = new CMario(x, y);
-		
-		this->isMarioLoaded = true;
+		this->player = (CMario*)gameObject;
 
 		DebugOut(L"[INFO] Mario has been loaded!\n");
 		
@@ -110,9 +105,6 @@ void CPlayScene::AddGameObject(int objectId, float x, float y)
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", objectId); return;
 	}
-
-	// General object setup
-	gameObject->SetPosition(x, y);
 
 	this->gameObjects.push_back(gameObject);
 }
