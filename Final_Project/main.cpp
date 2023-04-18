@@ -153,6 +153,8 @@ int Run()
 		{
 			frameStart = now;
 
+			CInputManager::GetInstance()->ProcessInput();
+
 			Update(dt);
 			Render();
 

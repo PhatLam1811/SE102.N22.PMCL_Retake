@@ -46,6 +46,8 @@ void CPlayScene::Load()
 
 	f.close();
 
+	CInputManager::GetInstance()->AssignKeyInputCallback(this);
+
 	DebugOut(L"[INFO] Done loading scene  %s\n", this->filePath);
 
 	DebugOut(L"[INFO] Scene game objects size : %zu\n", this->gameObjects.size());
@@ -117,6 +119,7 @@ void CPlayScene::AddGameObject(int objectId, float x, float y)
 
 void CPlayScene::Unload()
 {
+	CInputManager::GetInstance()->UnAssignKeyInputCallback(this);
 	return;
 }
 
@@ -128,4 +131,19 @@ void CPlayScene::Render()
 	{
 		this->gameObjects[i]->Render();
 	}
+}
+
+void CPlayScene::OnKeyDown(BYTE* keyStates)
+{
+	DebugOut(L"On key down : %i\n", keyStates);
+}
+
+void CPlayScene::OnKeyPress(int keyCode)
+{
+	DebugOut(L"On key press : %i\n", keyCode);
+}
+
+void CPlayScene::OnKeyUp(int keyCode)
+{
+	DebugOut(L"On key up : %i\n", keyCode);
 }

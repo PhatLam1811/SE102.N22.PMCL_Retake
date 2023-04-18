@@ -167,6 +167,9 @@ void CGraphicManager::Init(HWND hWnd, HINSTANCE hInstance)
 	return;
 }
 
+HWND CGraphicManager::GetWndHandler() { return this->hWnd; }
+HINSTANCE CGraphicManager::GetHInstance() { return this->hInstance; }
+
 int CGraphicManager::GetBackBufferWidth() { return this->backBufferWidth; }
 int CGraphicManager::GetBackBufferHeight() { return this->backBufferHeight; }
 

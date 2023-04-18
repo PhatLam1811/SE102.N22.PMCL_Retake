@@ -7,9 +7,6 @@
 #include "CSceneManager.h"
 #include "CInputManager.h"
 
-#define DIRECTINPUT_VERSION 0x0800
-#define MAX_FRAME_RATE 100
-
 using namespace std;
 
 class CGameManager

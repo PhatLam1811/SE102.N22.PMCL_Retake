@@ -33,6 +33,13 @@ public:
 	// game handler accessors
 	static CGraphicManager* GetInstance();
 
+	HWND GetWndHandler();
+	HINSTANCE GetHInstance();
+
+	// window size accessors
+	int GetBackBufferWidth();
+	int GetBackBufferHeight();
+
 	// directX handlers accessors
 	ID3D10Device* GetDirect3DDevice();
 	IDXGISwapChain* GetSwapChain();
@@ -40,10 +47,6 @@ public:
 	ID3DX10Sprite* GetSpriteHandler();
 	ID3D10BlendState* GetAlphaBlending();
 	void SetPointSamplerState();
-
-	// window size accessors
-	int GetBackBufferWidth();
-	int GetBackBufferHeight();
 
 	void Init(HWND hWnd, HINSTANCE hInstance);
 

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CScene.h"
+#include "CInputManager.h"
 
-class CPlayScene : public CScene
+class CPlayScene : public CScene, public IKeyInputProcessable
 {
 private:
 	bool isMarioLoaded;
@@ -16,4 +17,9 @@ public:
 	virtual void Unload();
 	virtual void Update(DWORD dt);
 	virtual void Render();
+
+	// Inherited via OnInputCallback
+	virtual void OnKeyDown(BYTE* keyStates) override;
+	virtual void OnKeyPress(int keyCode) override;
+	virtual void OnKeyUp(int keyCode) override;
 };

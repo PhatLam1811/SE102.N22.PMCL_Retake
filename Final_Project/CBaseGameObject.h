@@ -9,6 +9,8 @@ protected:
 	float y;
 
 public:
+	CBaseGameObject();
+
 	void SetPosition(float x, float y);
 	void GetPosition(float &x, float &y);
 	void SetPositionX(float x);

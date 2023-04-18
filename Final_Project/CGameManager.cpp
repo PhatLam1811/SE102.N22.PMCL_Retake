@@ -23,7 +23,11 @@ CAnimationManager* CGameManager::GetAnimationManager() { return CAnimationManage
 CSceneManager* CGameManager::GetSceneManager() { return CSceneManager::GetInstance(); }
 CInputManager* CGameManager::GetInputManager() { return CInputManager::GetInstance(); }
 
-void CGameManager::Init(HWND hWnd, HINSTANCE hInstance) { GetGraphicManager()->Init(hWnd, hInstance); }
+void CGameManager::Init(HWND hWnd, HINSTANCE hInstance) 
+{ 
+	GetGraphicManager()->Init(hWnd, hInstance);
+	GetInputManager()->Init();
+}
 
 void CGameManager::Load(LPCWSTR gameFile)
 {
