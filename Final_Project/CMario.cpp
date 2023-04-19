@@ -8,8 +8,8 @@ CMario::CMario(float x, float y)
 	this->x = x;
 	this->y = y;
 
-	this->vx = WALKING_SPEED;
-	this->vy = WALKING_SPEED;
+	this->vx = MARIO_WALKING_SPEED;
+	this->vy = MARIO_WALKING_SPEED;
 
 	this->dirX = 1;
 
@@ -40,14 +40,16 @@ void CMario::SlowDown() { this->isSlowingDown = true; }
 
 void CMario::OnSlowDown()
 {
-	// accelX decrease overtime
-	this->accelX += this->dirX * SPEED_DECREMENT;
-
 	// stop if accelX & moving direction are opposite 
-	if (this->accelX * this->dirX < 0)
+	if (this->accelX * this->dirX <= 0)
 	{
 		this->isSlowingDown = false;
 		this->accelX = 0;
+	}
+	else
+	{
+		// accelX decrease overtime
+		this->accelX += this->dirX * SPEED_DECREMENT;
 	}
 }
 

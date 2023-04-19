@@ -2,10 +2,8 @@
 
 #include "CBaseCharacter.h"
 
-#define DIR_LEFT -1
-#define DIR_RIGHT 1
-
-#define WALKING_SPEED 0.1f
+#define MARIO_RUNNING_SPEED 0.2f
+#define MARIO_WALKING_SPEED 0.1f
 
 #define SPEED_INCREMENT 0.05f
 #define SPEED_DECREMENT -0.08f

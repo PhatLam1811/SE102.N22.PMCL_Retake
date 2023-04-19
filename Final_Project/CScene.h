@@ -29,7 +29,9 @@ public:
 		this->camera = new CCamera();
 	}
 
-	virtual void GetCamPos(float &cameraX, float &cameraY) { cameraX = 0.0f; cameraY = 0.0f; }
+	virtual void GetCamPos(float& camX, float& camY) { this->camera->GetPosition(camX, camY); }
+	virtual void SetCamPos(float camX, float camY) { this->camera->SetPosition(camX, camY); }
+	
 	virtual void Load() = 0;
 	virtual void AddGameObject(int objectId, float x, float y) = 0;
 	virtual void Unload() = 0;

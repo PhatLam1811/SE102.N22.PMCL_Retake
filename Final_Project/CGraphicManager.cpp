@@ -1,4 +1,5 @@
 #include "CGraphicManager.h"
+#include "CSceneManager.h"
 #include "Utils.h"
 
 CGraphicManager* CGraphicManager::instance = nullptr;
@@ -251,15 +252,21 @@ void CGraphicManager::Render(float x, float y, CTexture* texture, RECT* rect, fl
 	this->spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
 
-void CGraphicManager::Render(CSprite* sprite, float x, float y)
+void CGraphicManager::Render(CSprite* sprite, float posX, float posY)
 {
+	float camX, camY;
+
+	CSceneManager::GetInstance()
+		->GetCurrentScene()
+		->GetCamPos(camX, camY);
+
 	D3DXMATRIX matTranslation;
 
-	x = (FLOAT)floor(x);
-	y = (FLOAT)floor(y);
+	// posX = (FLOAT)floor(posX);
+	// posY = (FLOAT)floor(posY);
 
 	// D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
-	D3DXMatrixTranslation(&matTranslation, x, this->GetBackBufferHeight() - y, 0.1f);
+	D3DXMatrixTranslation(&matTranslation, posX - camX, this->GetBackBufferHeight() - posY + camY, 0.1f);
 
 	D3DMATRIX matWorld = sprite->GetMatScaling() * matTranslation;
 

@@ -1,7 +1,7 @@
 #include <fstream>
 
 #include "CPlayScene.h"
-#include "CConfigManager.h"
+#include "CGameManager.h"
 #include "GameDefine.h"
 #include "Utils.h"
 
@@ -32,8 +32,8 @@ void CPlayScene::Load()
 		//
 		switch (section)
 		{
-		case SCENE_SECTION_ASSETS: CConfigManager::GetInstance()->ParseSection_ASSETS(line); break;
-		case SCENE_SECTION_OBJECTS: CConfigManager::GetInstance()->ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_ASSETS: CGameManager::GetInstance()->GetConfigManager()->ParseSection_ASSETS(line); break;
+		case SCENE_SECTION_OBJECTS: CGameManager::GetInstance()->GetConfigManager()->ParseSection_OBJECTS(line); break;
 		}
 	}
 
@@ -42,8 +42,6 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Done loading scene  %s\n", this->filePath);
 
 	DebugOut(L"[INFO] Scene game objects size : %zu\n", this->gameObjects.size());
-
-	DebugOut(L"[INFO] Current playscene memory address : %p\n", this);
 
 	CInputManager::GetInstance()->AssignKeyInputCallback(this);
 }
@@ -117,6 +115,20 @@ void CPlayScene::Unload()
 void CPlayScene::Update(DWORD dt) 
 { 
 	this->player->Update(dt);
+
+	// Update camera to follow mario
+	float camX = this->player->GetPositionX();
+	float camY = this->player->GetPositionY();
+
+	int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
+	int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();
+
+	camX -= backBufferWidth / 2;
+	camY -= backBufferHeight / 2;
+
+	if (camX < 0) camX = 0;
+
+	this->SetCamPos(camX, 0.0f /*cy*/);
 }
 
 void CPlayScene::Render()
@@ -135,7 +147,7 @@ void CPlayScene::OnKeyDown(int keyCode)
 	{
 	case DIK_LEFT:
 	case DIK_RIGHT:
-		 this->player->SpeedUp(); break;
+			this->player->SpeedUp(); break;
 	default:
 		break;
 	}
@@ -148,9 +160,9 @@ void CPlayScene::OnKeyPress(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_LEFT:
-		 this->player->SetHorizontalDir(DIR_LEFT); break;
+		this->player->SetHorizontalDir(DIR_LEFT); break;
 	case DIK_RIGHT:
-		 this->player->SetHorizontalDir(DIR_RIGHT); break;
+		this->player->SetHorizontalDir(DIR_RIGHT); break;
 	default:
 		break;
 	}	

@@ -52,7 +52,7 @@ public:
 
 	// Renderer
 	void Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height);
-	void Render(CSprite* sprite ,float x, float y);
+	void Render(CSprite* sprite ,float posX, float posY);
 
 	~CGraphicManager();
 };
