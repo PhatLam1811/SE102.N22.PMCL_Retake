@@ -8,21 +8,25 @@ CMario::CMario(float x, float y)
 	this->x = x;
 	this->y = y;
 
-	this->vx = SPEED;
-	this->vy = SPEED;
+	this->vx = WALKING_SPEED;
+	this->vy = WALKING_SPEED;
 
 	this->dirX = 1;
 
 	this->accelX = 0;
 	this->accelY = 0;
+
+	this->isSlowingDown = false;
 }
+
+// ====================================================
 
 void CMario::SetHorizontalDir(int dirX)
 {
 	this->dirX = dirX;
 }
 
-void CMario::Move()
+void CMario::SpeedUp()
 {
 	// accelX increase overtime
 	this->accelX += this->dirX * SPEED_INCREMENT;
@@ -30,14 +34,36 @@ void CMario::Move()
 	// accelX range from -1 to 1 
 	if (this->accelX > 1) this->accelX = 1;
 	if (this->accelX < -1) this->accelX = -1;
-
-	DebugOut(L"[INFO] Mario dir x : %f\n", this->dirX);
-	DebugOut(L"[INFO] Mario accel x : %f\n", this->accelX);
 }
+
+void CMario::SlowDown() { this->isSlowingDown = true; }
+
+void CMario::OnSlowDown()
+{
+	// accelX decrease overtime
+	this->accelX += this->dirX * SPEED_DECREMENT;
+
+	// stop if accelX & moving direction are opposite 
+	if (this->accelX * this->dirX < 0)
+	{
+		this->isSlowingDown = false;
+		this->accelX = 0;
+	}
+}
+
+void CMario::Move(DWORD elapsedTime)
+{
+	this->x += this->accelX * this->vx * elapsedTime;
+}
+
+// ====================================================
 
 void CMario::Update(DWORD elapsedTime)
 {
-	this->x += this->accelX * this->vx * elapsedTime;
+	if (this->isSlowingDown) this->OnSlowDown();
+
+	this->Move(elapsedTime);
+
 	return;
 }
 

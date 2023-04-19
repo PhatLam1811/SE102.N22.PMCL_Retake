@@ -135,7 +135,7 @@ void CPlayScene::OnKeyDown(int keyCode)
 	{
 	case DIK_LEFT:
 	case DIK_RIGHT:
-		 this->player->Move(); break;
+		 this->player->SpeedUp(); break;
 	default:
 		break;
 	}
@@ -159,4 +159,13 @@ void CPlayScene::OnKeyPress(int keyCode)
 void CPlayScene::OnKeyUp(int keyCode)
 {
 	DebugOut(L"On key up : %i\n", keyCode);
+
+	switch (keyCode)
+	{
+	case DIK_LEFT:
+	case DIK_RIGHT:
+		this->player->SlowDown(); break;
+	default:
+		break;
+	}
 }
