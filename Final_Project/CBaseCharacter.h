@@ -8,10 +8,10 @@ protected:
 	float vx;
 	float vy;
 
-	float ax;
-	float ay;
+	float accelX;
+	float accelY;
 
-	float nx;
+	float dirX;
 
 public:
 };

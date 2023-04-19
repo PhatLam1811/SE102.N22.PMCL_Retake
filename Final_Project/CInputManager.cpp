@@ -122,6 +122,12 @@ bool CInputManager::IsKeyDown(int KeyCode)
 
 void CInputManager::ProcessKeyDown()
 {
+	if (this->IsKeyDown(DIK_LEFT))
+		this->OnKeyDownCallback(DIK_LEFT);
+
+	if (this->IsKeyDown(DIK_RIGHT))
+		this->OnKeyDownCallback(DIK_RIGHT);
+
 	if (this->IsKeyDown(DIK_A))
 		this->OnKeyDownCallback(DIK_A);
 

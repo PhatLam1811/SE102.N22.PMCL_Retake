@@ -5,12 +5,7 @@
 #include "GameDefine.h"
 #include "Utils.h"
 
-CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath)
-{
-	this->player = nullptr;
-
-	CInputManager::GetInstance()->AssignKeyInputCallback(this);
-}
+CPlayScene::CPlayScene(int sceneId, wstring filePath) : CScene(sceneId, filePath) { this->player = nullptr; }
 
 void CPlayScene::Load()
 {
@@ -47,6 +42,10 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Done loading scene  %s\n", this->filePath);
 
 	DebugOut(L"[INFO] Scene game objects size : %zu\n", this->gameObjects.size());
+
+	DebugOut(L"[INFO] Current playscene memory address : %p\n", this);
+
+	CInputManager::GetInstance()->AssignKeyInputCallback(this);
 }
 
 void CPlayScene::AddGameObject(int objectId, float x, float y)
@@ -115,7 +114,10 @@ void CPlayScene::Unload()
 	return;
 }
 
-void CPlayScene::Update(DWORD dt) { }
+void CPlayScene::Update(DWORD dt) 
+{ 
+	this->player->Update(dt);
+}
 
 void CPlayScene::Render()
 {
@@ -128,11 +130,30 @@ void CPlayScene::Render()
 void CPlayScene::OnKeyDown(int keyCode)
 {		
 	DebugOut(L"On key down : %i\n", keyCode);
+
+	switch (keyCode)
+	{
+	case DIK_LEFT:
+	case DIK_RIGHT:
+		 this->player->Move(); break;
+	default:
+		break;
+	}
 }
 
 void CPlayScene::OnKeyPress(int keyCode)
 {
 	DebugOut(L"On key press : %i\n", keyCode);
+
+	switch (keyCode)
+	{
+	case DIK_LEFT:
+		 this->player->SetHorizontalDir(DIR_LEFT); break;
+	case DIK_RIGHT:
+		 this->player->SetHorizontalDir(DIR_RIGHT); break;
+	default:
+		break;
+	}	
 }
 
 void CPlayScene::OnKeyUp(int keyCode)

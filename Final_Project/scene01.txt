@@ -9,4 +9,3 @@ mario.txt
 
 # MARIO
 0	100	100
-0	30	100

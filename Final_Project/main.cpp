@@ -49,6 +49,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void Update(DWORD dt)
 {
+	CGameManager::GetInstance()->GetSceneManager()->GetCurrentScene()->Update(dt);
 }
 
 /*

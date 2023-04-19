@@ -1,20 +1,43 @@
 #include "CMario.h"
+
 #include "CAnimationManager.h"
+#include "Utils.h"
 
 CMario::CMario(float x, float y)
 {
 	this->x = x;
 	this->y = y;
+
+	this->vx = SPEED;
+	this->vy = SPEED;
+
+	this->dirX = 1;
+
+	this->accelX = 0;
+	this->accelY = 0;
 }
 
-void CMario::Move(int direction)
+void CMario::SetHorizontalDir(int dirX)
 {
-	this->ax += this->speedIncrement * direction;
+	this->dirX = dirX;
+}
+
+void CMario::Move()
+{
+	// accelX increase overtime
+	this->accelX += this->dirX * SPEED_INCREMENT;
+
+	// accelX range from -1 to 1 
+	if (this->accelX > 1) this->accelX = 1;
+	if (this->accelX < -1) this->accelX = -1;
+
+	DebugOut(L"[INFO] Mario dir x : %f\n", this->dirX);
+	DebugOut(L"[INFO] Mario accel x : %f\n", this->accelX);
 }
 
 void CMario::Update(DWORD elapsedTime)
 {
-	this->vx += this->ax * this->speed * elapsedTime;
+	this->x += this->accelX * this->vx * elapsedTime;
 	return;
 }
 

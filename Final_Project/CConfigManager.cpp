@@ -106,7 +106,7 @@ void CConfigManager::ParseSection_SPRITES(string line)
 
 void CConfigManager::ParseSection_OBJECTS(string line)
 {
-	DebugOut(L"ParseSection_OBJECTS entered!!!!");
+	DebugOut(L"ParseSection_OBJECTS entered!!!!\n");
 
 	vector<string> tokens = split(line);
 

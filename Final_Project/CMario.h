@@ -2,20 +2,22 @@
 
 #include "CBaseCharacter.h"
 
-#define DIR_LEFT -1;
-#define DIR_RIGHT 1;
+#define DIR_LEFT -1
+#define DIR_RIGHT 1
 
+#define WALKING_SPEED 0.1f
+#define SPEED_INCREMENT 0.05f
 
 class CMario : public CBaseCharacter
 {
 private:
-	const float speed = 3.0f;
-	const float speedIncrement = 0.1f;
 
 public:
 	CMario(float x, float y);
 
-	void Move(int direction);
+	void SetHorizontalDir(int dirX);
+
+	void Move();
 
 	// Inherited via CBaseCharacter
 	virtual void Update(DWORD elapsedTime) override;
