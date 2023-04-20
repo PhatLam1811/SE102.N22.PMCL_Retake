@@ -143,9 +143,12 @@ void CPlayScene::OnKeyDown(int keyCode)
 {
 	switch (keyCode)
 	{
+	case DIK_A:
+		this->player->PowerUp(); break;
 	case DIK_LEFT:
+		this->player->OnSpeedUp(DIR_LEFT); break;
 	case DIK_RIGHT:
-			this->player->SpeedUp(); break;
+		this->player->OnSpeedUp(DIR_RIGHT); break;
 	default:
 		break;
 	}
@@ -155,12 +158,6 @@ void CPlayScene::OnKeyPress(int keyCode)
 {
 	switch (keyCode)
 	{
-	case DIK_LEFT:
-		this->player->SetHorizontalDir(DIR_LEFT); break;
-	case DIK_RIGHT:
-		this->player->SetHorizontalDir(DIR_RIGHT); break;
-	case DIK_A:
-		this->player->Run(); break;
 	default:
 		break;
 	}	
@@ -172,9 +169,7 @@ void CPlayScene::OnKeyUp(int keyCode)
 	{
 	case DIK_LEFT:
 	case DIK_RIGHT:
-		this->player->SlowDown(); break;
-	case DIK_A:
-		this->player->Run(); break;
+		this->player->OnStopSpeedUp(); break;
 	default:
 		break;
 	}

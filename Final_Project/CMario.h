@@ -2,14 +2,15 @@
 
 #include "CBaseCharacter.h"
 
-#define MARIO_RUNNING_SPEED 0.2f
 #define MARIO_WALKING_SPEED 0.1f
 
-#define MARIO_WALKING_ACCEL_SCALE 1.0f
-#define MARIO_RUNNING_ACCEL_SCALE 2.0f
+#define MARIO_MAX_P_METER 1.0f
 
-#define SPEED_INCREMENT 0.05f
-#define SPEED_DECREMENT -0.08f
+#define MARIO_ACCEL_SCALE 1.0f
+
+#define P_METER_INCREMENT 0.015f // 0.0015f
+#define SPEED_INCREMENT 0.05f // 0.003f
+// #define SPEED_DECREMENT -0.003f
 
 class CMarioForm
 {
@@ -19,20 +20,29 @@ public: void virtual Render() = 0;
 class CMario : public CBaseCharacter
 {
 private:
-	float accelScale;
+	float powerMeter; // P meter
+
+
+	bool isPowerUp;
+	bool isMaxPower;
+	bool isPowerOnCooldown;
+	
 	bool isSlowingDown;
+	bool isSpeedingUp;
 
 	CMarioForm* form;
 
 public:
 	CMario(float x, float y);
 
-	void SetHorizontalDir(int dirX);
+	void PowerUp();
+	void OnStopSpeedUp();
 
-	void Run();
-	void SpeedUp();
-	void SlowDown();
-	void OnSlowDown();	
+	void OnSpeedUp(int dirX);
+	void OnSlowDown();
+
+	void OnPowerUp();
+	
 	void Move(DWORD elapsedTime);
 
 	// Inherited via CBaseCharacter

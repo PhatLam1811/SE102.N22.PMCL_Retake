@@ -13,55 +13,65 @@ CMario::CMario(float x, float y)
 
 	this->dirX = 1;
 
-	this->accelX = 0;
-	this->accelY = 0;
+	this->accelX = 0.0f;
+	this->accelY = 0.0f;
 
-	this->accelScale = MARIO_WALKING_ACCEL_SCALE;
+	this->powerMeter = 0.0f; // p-meter fill up from 1f to 2f (can't multiply zero with other scales)
+
+	this->form = nullptr;
+
+	this->isPowerUp = false;
 	this->isSlowingDown = false;
+	this->isSpeedingUp = false;
 }
 
 // ====================================================
 
-void CMario::SetHorizontalDir(int dirX)
-{
-	this->dirX = dirX;
-}
-
-void CMario::Run()
-{
-	if (this->accelScale != MARIO_RUNNING_ACCEL_SCALE)
-	{
-		this->accelScale = MARIO_RUNNING_ACCEL_SCALE;
-	}
-	else
-	{
-		this->accelScale = MARIO_WALKING_ACCEL_SCALE;
-	}
-}
-
-void CMario::SpeedUp()
-{
-	// accelX increase overtime
-	this->accelX += this->dirX * SPEED_INCREMENT;
-
-	// accelX is limited by accelScale
-	if (this->accelX > this->accelScale) this->accelX = this->accelScale;
-	if (this->accelX < -this->accelScale) this->accelX = -this->accelScale;
-}
-
-void CMario::SlowDown() { this->isSlowingDown = true; }
+void CMario::PowerUp() { this->isPowerUp = this->isSpeedingUp; }
 
 void CMario::OnSlowDown()
 {
+	if (this->accelX == 0.0f || this->isSpeedingUp) return;
+
 	// accelX decrease overtime
-	this->accelX += this->dirX * SPEED_DECREMENT;
+	this->accelX += this->dirX * -SPEED_INCREMENT;
 
 	// stop if accelX & moving direction are opposite 
-	if (this->accelX * this->dirX <= 0)
+	if (this->accelX * this->dirX <= 0.0f) this->accelX = 0.0f;
+
+	// DebugOut(L"[INFO] ON SLOWING DOWN!\n");
+}
+
+void CMario::OnPowerUp()
+{
+	this->powerMeter += P_METER_INCREMENT;
+
+	if (this->powerMeter >= MARIO_MAX_P_METER)
 	{
-		this->isSlowingDown = false;
-		this->accelX = 0;
+		this->powerMeter = MARIO_MAX_P_METER;
+		this->isMaxPower = true;
 	}
+}
+
+void CMario::OnStopSpeedUp() { this->isSpeedingUp = false; }
+
+void CMario::OnSpeedUp(int dirX)
+{
+	this->dirX = dirX;
+	this->isSpeedingUp = true;
+
+	// accelX increase overtime
+	float scaleOvertime = this->dirX * SPEED_INCREMENT;
+
+	this->accelX += scaleOvertime;
+
+	// accelX scale is limited
+	float maxScale = this->powerMeter + MARIO_ACCEL_SCALE;
+
+	if (this->accelX > maxScale) this->accelX = maxScale;
+	if (this->accelX < -maxScale) this->accelX = -maxScale;
+
+	//DebugOut(L"[INFO] ON SPEEDING UP!\n");
 }
 
 void CMario::Move(DWORD elapsedTime)
@@ -73,7 +83,11 @@ void CMario::Move(DWORD elapsedTime)
 
 void CMario::Update(DWORD elapsedTime)
 {
-	if (this->isSlowingDown) this->OnSlowDown();
+	if (this->isPowerUp) this->OnPowerUp();
+	this->OnSlowDown();
+
+	//DebugOut(L"[INFO] Mario P meter : %f\n", this->powerMeter);
+	//DebugOut(L"[INFO] Mario accel x : %f\n", this->accelX);
 
 	this->Move(elapsedTime);
 
