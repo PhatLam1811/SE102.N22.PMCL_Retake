@@ -117,18 +117,18 @@ void CPlayScene::Update(DWORD dt)
 	this->player->Update(dt);
 
 	// Update camera to follow mario
-	float camX = this->player->GetPositionX();
-	float camY = this->player->GetPositionY();
+	//float camX = this->player->GetPositionX();
+	//float camY = this->player->GetPositionY();
 
-	int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
-	int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();
+	//int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
+	//int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();
 
-	camX -= backBufferWidth / 2;
-	camY -= backBufferHeight / 2;
+	//camX -= backBufferWidth / 2;
+	//camY -= backBufferHeight / 2;
 
-	if (camX < 0) camX = 0;
+	//if (camX < 0) camX = 0;
 
-	this->SetCamPos(camX, 0.0f /*cy*/);
+	//this->SetCamPos(camX, 0.0f /*cy*/);
 }
 
 void CPlayScene::Render()
@@ -140,9 +140,7 @@ void CPlayScene::Render()
 }
 
 void CPlayScene::OnKeyDown(int keyCode)
-{		
-	DebugOut(L"On key down : %i\n", keyCode);
-
+{
 	switch (keyCode)
 	{
 	case DIK_LEFT:
@@ -155,14 +153,14 @@ void CPlayScene::OnKeyDown(int keyCode)
 
 void CPlayScene::OnKeyPress(int keyCode)
 {
-	DebugOut(L"On key press : %i\n", keyCode);
-
 	switch (keyCode)
 	{
 	case DIK_LEFT:
 		this->player->SetHorizontalDir(DIR_LEFT); break;
 	case DIK_RIGHT:
 		this->player->SetHorizontalDir(DIR_RIGHT); break;
+	case DIK_A:
+		this->player->Run(); break;
 	default:
 		break;
 	}	
@@ -170,13 +168,13 @@ void CPlayScene::OnKeyPress(int keyCode)
 
 void CPlayScene::OnKeyUp(int keyCode)
 {
-	DebugOut(L"On key up : %i\n", keyCode);
-
 	switch (keyCode)
 	{
 	case DIK_LEFT:
 	case DIK_RIGHT:
 		this->player->SlowDown(); break;
+	case DIK_A:
+		this->player->Run(); break;
 	default:
 		break;
 	}

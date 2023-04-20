@@ -14,7 +14,7 @@ protected:
 	float accelX;
 	float accelY;
 
-	float dirX;
+	int dirX;
 
 public:
 };

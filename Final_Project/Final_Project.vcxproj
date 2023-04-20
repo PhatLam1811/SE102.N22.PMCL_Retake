@@ -132,10 +132,10 @@
     <ClCompile Include="CAnimationManager.cpp" />
     <ClCompile Include="CAssetManager.cpp" />
     <ClCompile Include="CBaseCharacter.cpp" />
+    <ClCompile Include="CBaseGameObject.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CConfigManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
-    <ClCompile Include="CBaseGameObject.cpp" />
     <ClCompile Include="CGraphicManager.cpp" />
     <ClCompile Include="CInputManager.cpp" />
     <ClCompile Include="CMario.cpp" />
