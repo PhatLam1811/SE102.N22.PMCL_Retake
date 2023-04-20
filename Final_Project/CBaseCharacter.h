@@ -17,4 +17,5 @@ protected:
 	int dirX;
 
 public:
+	CBaseCharacter(float x, float y) : CBaseGameObject(x, y) {};
 };

@@ -100,7 +100,7 @@
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="CPlatform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +165,7 @@
       <Filter>Header Files\Game Objects\Characters</Filter>
     </ClInclude>
     <ClInclude Include="CPlatform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

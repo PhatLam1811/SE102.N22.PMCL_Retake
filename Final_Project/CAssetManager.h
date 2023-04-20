@@ -28,7 +28,7 @@ public:
 
 	void AddSprite(int spriteId, int left, int top, int right, int bottom, int textureId);
 	CSprite* GetSprite(int spriteId);
-	
+
 	void Clear();
 
 	~CAssetManager();

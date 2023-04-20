@@ -4,7 +4,7 @@
 CPlatform::CPlatform(
 	float x, float y, 
 	float cell_width, float cell_height, int length, 
-	int sprite_id_begin, int sprite_id_middle, int sprite_id_end)
+	int sprite_id_begin, int sprite_id_middle, int sprite_id_end) : CBaseGameObject(x, y)
 {
 	this->x = x;
 	this->y = y;

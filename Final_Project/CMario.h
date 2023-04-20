@@ -10,7 +10,6 @@
 
 #define P_METER_INCREMENT 0.015f // 0.0015f
 #define SPEED_INCREMENT 0.05f // 0.003f
-// #define SPEED_DECREMENT -0.003f
 
 class CMarioForm
 {

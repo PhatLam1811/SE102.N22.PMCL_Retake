@@ -3,11 +3,8 @@
 #include "CAnimationManager.h"
 #include "Utils.h"
 
-CMario::CMario(float x, float y)
+CMario::CMario(float x, float y) : CBaseCharacter(x, y)
 {
-	this->x = x;
-	this->y = y;
-
 	this->vx = MARIO_WALKING_SPEED;
 	this->vy = MARIO_WALKING_SPEED;
 

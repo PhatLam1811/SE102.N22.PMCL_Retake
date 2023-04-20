@@ -10,7 +10,7 @@ protected:
 	float y;
 
 public:
-	CBaseGameObject();
+	CBaseGameObject(float x, float y);
 
 	std::string GetType();
 	void SetPosition(float x, float y);

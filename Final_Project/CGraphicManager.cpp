@@ -260,10 +260,13 @@ void CGraphicManager::Render(CSprite* sprite, float posX, float posY)
 		->GetCurrentScene()
 		->GetCamPos(camX, camY);
 
+	camX = (FLOAT)floor(camX);
+	camY = (FLOAT)floor(camY);
+
 	D3DXMATRIX matTranslation;
 
-	// posX = (FLOAT)floor(posX);
-	// posY = (FLOAT)floor(posY);
+	 posX = (FLOAT)floor(posX);
+	 posY = (FLOAT)floor(posY);
 
 	// D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
 	D3DXMatrixTranslation(&matTranslation, posX - camX, this->GetBackBufferHeight() - posY + camY, 0.1f);

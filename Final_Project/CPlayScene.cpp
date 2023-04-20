@@ -107,6 +107,24 @@ void CPlayScene::AddGameObject(int objectId, float x, float y)
 	this->gameObjects.push_back(gameObject);
 }
 
+void CPlayScene::AddGameObject(CBaseGameObject* gameObject)
+{
+	if (gameObject->GetType() == typeid(CMario).name())
+	{
+		if (this->player != nullptr)
+		{
+			DebugOut(L"[INFO] Mario has been loaded!\n"); return;
+		}
+
+		// assign game object as player if its class is CMario
+		this->player = (CMario*)gameObject;
+
+		DebugOut(L"[INFO] Mario has been loaded!\n");
+	}
+
+	this->gameObjects.push_back(gameObject);
+}
+
 void CPlayScene::Unload()
 {
 	CInputManager::GetInstance()->UnAssignKeyInputCallback(this);
@@ -118,18 +136,18 @@ void CPlayScene::Update(DWORD dt)
 	this->player->Update(dt);
 
 	// Update camera to follow mario
-	//float camX = this->player->GetPositionX();
-	//float camY = this->player->GetPositionY();
+	float camX = this->player->GetPositionX();
+	float camY = this->player->GetPositionY();
 
-	//int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
-	//int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();
+	int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
+	int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();
 
-	//camX -= backBufferWidth / 2;
-	//camY -= backBufferHeight / 2;
+	camX -= backBufferWidth / 2;
+	camY -= backBufferHeight / 2;
 
-	//if (camX < 0) camX = 0;
+	if (camX < 0) camX = 0;
 
-	//this->SetCamPos(camX, 0.0f /*cy*/);
+	this->SetCamPos(camX, 0.0f /*cy*/);
 }
 
 void CPlayScene::Render()
