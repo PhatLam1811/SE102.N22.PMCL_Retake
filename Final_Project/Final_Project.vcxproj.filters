@@ -99,6 +99,9 @@
     <ClCompile Include="CBaseGameObject.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CPlatform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="CBaseCharacter.h">
       <Filter>Header Files\Game Objects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlatform.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
