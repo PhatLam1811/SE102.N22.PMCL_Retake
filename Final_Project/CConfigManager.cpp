@@ -67,7 +67,6 @@ void CConfigManager::ParseSection_ASSETS(string line)
 	wstring path = ToWSTR(tokens[0]);
 
 	CAssetManager::GetInstance()->LoadAssets(path.c_str());
-	int size = CAssetManager::GetInstance()->GetSprites();
 }
 
 void CConfigManager::ParseSection_ANIMATIONS(string line)

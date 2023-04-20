@@ -15,7 +15,6 @@ public:
 
 	// Inherited via CScene
 	virtual void Load();
-	virtual void AddGameObject(int objectId, float x, float y);
 	virtual void AddGameObject(CBaseGameObject* gameObject);
 	virtual void Unload();
 	virtual void Update(DWORD dt);

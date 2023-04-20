@@ -33,7 +33,6 @@ public:
 	virtual void SetCamPos(float camX, float camY) { this->camera->SetPosition(camX, camY); }
 	
 	virtual void Load() = 0;
-	virtual void AddGameObject(int objectId, float x, float y) = 0;
 	virtual void AddGameObject(CBaseGameObject* gameObject) = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;

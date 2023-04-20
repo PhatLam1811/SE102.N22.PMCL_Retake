@@ -47,66 +47,6 @@ void CPlayScene::Load()
 	CInputManager::GetInstance()->AssignKeyInputCallback(this);
 }
 
-void CPlayScene::AddGameObject(int objectId, float x, float y)
-{
-	CBaseGameObject* gameObject = nullptr;
-
-	switch (objectId)
-	{
-	case OBJECT_TYPE_MARIO:
-		if (this->player != nullptr)
-		{
-			DebugOut(L"[ERROR] MARIO object was loaded before!\n");
-			return;
-		}
-
-		gameObject = new CMario(x, y);
-		this->player = (CMario*)gameObject;
-		
-		DebugOut(L"[INFO] Mario has been loaded!\n");
-		
-		break;
-
-		//case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
-		//case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
-		//case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-
-		//case OBJECT_TYPE_PLATFORM:
-		//{
-
-		//	float cell_width = (float)atof(tokens[3].c_str());
-		//	float cell_height = (float)atof(tokens[4].c_str());
-		//	int length = atoi(tokens[5].c_str());
-		//	int sprite_begin = atoi(tokens[6].c_str());
-		//	int sprite_middle = atoi(tokens[7].c_str());
-		//	int sprite_end = atoi(tokens[8].c_str());
-
-		//	obj = new CPlatform(
-		//		x, y,
-		//		cell_width, cell_height, length,
-		//		sprite_begin, sprite_middle, sprite_end
-		//	);
-
-		//	break;
-		//}
-
-		//case OBJECT_TYPE_PORTAL:
-		//{
-		//	float r = (float)atof(tokens[3].c_str());
-		//	float b = (float)atof(tokens[4].c_str());
-		//	int scene_id = atoi(tokens[5].c_str());
-		//	obj = new CPortal(x, y, r, b, scene_id);
-		//}
-		//break;
-
-
-	default:
-		DebugOut(L"[ERROR] Invalid object type: %d\n", objectId); return;
-	}
-
-	this->gameObjects.push_back(gameObject);
-}
-
 void CPlayScene::AddGameObject(CBaseGameObject* gameObject)
 {
 	if (gameObject->GetType() == typeid(CMario).name())
