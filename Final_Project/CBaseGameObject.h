@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 class CBaseGameObject
 {
@@ -11,6 +12,7 @@ protected:
 public:
 	CBaseGameObject();
 
+	std::string GetType();
 	void SetPosition(float x, float y);
 	void GetPosition(float &x, float &y);
 	void SetPositionX(float x);

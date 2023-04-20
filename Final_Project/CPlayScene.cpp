@@ -1,4 +1,5 @@
 #include <fstream>
+#include <typeinfo>
 
 #include "CPlayScene.h"
 #include "CGameManager.h"
@@ -61,7 +62,7 @@ void CPlayScene::AddGameObject(int objectId, float x, float y)
 
 		gameObject = new CMario(x, y);
 		this->player = (CMario*)gameObject;
-
+		
 		DebugOut(L"[INFO] Mario has been loaded!\n");
 		
 		break;
