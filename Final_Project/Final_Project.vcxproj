@@ -131,7 +131,6 @@
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimationManager.cpp" />
     <ClCompile Include="CAssetManager.cpp" />
-    <ClCompile Include="CBaseCharacter.cpp" />
     <ClCompile Include="CBaseGameObject.cpp" />
     <ClCompile Include="CPlatform.cpp" />
     <ClCompile Include="CCamera.cpp" />

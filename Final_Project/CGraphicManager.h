@@ -51,6 +51,7 @@ public:
 	void Init(HWND hWnd, HINSTANCE hInstance);
 
 	// Renderer
+	void Render(float x, float y, int textureId, float left, float top, float down, float right, float alpha, int sprite_width, int sprite_height);
 	void Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height);
 	void Render(CSprite* sprite ,float posX, float posY);
 

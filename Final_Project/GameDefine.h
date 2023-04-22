@@ -23,6 +23,9 @@
 
 // Game assets temp Ids
 
+#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define BBOX_ALPHA 0.25f		// Bounding box transparency
+
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20

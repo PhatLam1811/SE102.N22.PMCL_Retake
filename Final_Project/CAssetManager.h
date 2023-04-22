@@ -25,6 +25,7 @@ public:
 	CTexture* LoadTexture(wstring texturePath);
 
 	void AddTexture(int textureId, wstring filePath);
+	CTexture* GetTexture(int textureId);
 
 	void AddSprite(int spriteId, int left, int top, int right, int bottom, int textureId);
 	CSprite* GetSprite(int spriteId);

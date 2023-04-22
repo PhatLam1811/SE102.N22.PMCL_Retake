@@ -95,6 +95,7 @@ void CPlayScene::Render()
 	for (int i = 0; i < this->gameObjects.size(); i++)
 	{
 		this->gameObjects[i]->Render();
+		this->gameObjects[i]->RenderBoundingBox();
 	}
 }
 

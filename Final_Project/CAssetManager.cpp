@@ -142,6 +142,8 @@ void CAssetManager::AddTexture(int textureId, wstring filePath)
 	this->textures[textureId] = this->LoadTexture(filePath);
 }
 
+CTexture* CAssetManager::GetTexture(int textureId) { return this->textures[textureId]; }
+
 void CAssetManager::AddSprite(int spriteId, int left, int top, int right, int bottom, int textureId)
 {
 	if (this->textures[textureId] == nullptr)

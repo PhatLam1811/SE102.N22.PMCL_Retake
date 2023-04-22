@@ -78,6 +78,14 @@ void CMario::Move(DWORD elapsedTime)
 
 // ====================================================
 
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = this->x - MARIO_BIG_BBOX_WIDTH / 2;
+	top = this->y - MARIO_BIG_BBOX_HEIGHT / 2;
+	right = left + MARIO_BIG_BBOX_WIDTH;
+	bottom = top + MARIO_BIG_BBOX_HEIGHT;
+}
+
 void CMario::Update(DWORD elapsedTime)
 {
 	if (this->isPowerUp) this->OnPowerUp();

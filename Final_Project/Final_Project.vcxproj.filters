@@ -93,9 +93,6 @@
     <ClCompile Include="CMario.cpp">
       <Filter>Source Files\Game Objects\Characters\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="CBaseCharacter.cpp">
-      <Filter>Source Files\Game Objects\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="CBaseGameObject.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>

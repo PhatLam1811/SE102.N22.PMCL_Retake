@@ -20,6 +20,9 @@ public:
 	float GetPositionX();
 	float GetPositionY();
 
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
+	virtual void RenderBoundingBox();
+
 	virtual void Update(DWORD elapsedTime) = 0;
 	virtual void Render() = 0;
 

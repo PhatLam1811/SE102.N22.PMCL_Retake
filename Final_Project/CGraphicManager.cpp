@@ -1,5 +1,6 @@
 #include "CGraphicManager.h"
 #include "CSceneManager.h"
+#include "CAssetManager.h"
 #include "Utils.h"
 
 CGraphicManager* CGraphicManager::instance = nullptr;
@@ -185,6 +186,26 @@ void CGraphicManager::SetPointSamplerState()
 	this->pD3DDevice->VSSetSamplers(0, 1, &this->pPointSamplerState);
 	this->pD3DDevice->GSSetSamplers(0, 1, &this->pPointSamplerState);
 	this->pD3DDevice->PSSetSamplers(0, 1, &this->pPointSamplerState);
+}
+
+void CGraphicManager::Render(
+	float x, float y, int textureId, 
+	float left, float top, float right, float bottom, 
+	float alpha, int sprite_width, int sprite_height)
+{
+	CTexture* bdBoxTexture = CAssetManager::GetInstance()->GetTexture(textureId);
+
+	RECT rect;
+
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)right - (int)left;
+	rect.bottom = (int)bottom - (int)top;
+
+	float cx, cy;
+	CSceneManager::GetInstance()->GetCurrentScene()->GetCamPos(cx, cy);
+
+	this->Render(x - cx, y - cy, bdBoxTexture, &rect, alpha, sprite_width, sprite_height);
 }
 
 void CGraphicManager::Render(float x, float y, CTexture* texture, RECT* rect, float alpha, int sprite_width, int sprite_height)

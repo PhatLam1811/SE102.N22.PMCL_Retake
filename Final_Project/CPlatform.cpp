@@ -16,6 +16,15 @@ CPlatform::CPlatform(
 	this->spriteIdEnd = sprite_id_end;
 }
 
+void CPlatform::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	float cellWidth_div_2 = this->cellWidth / 2;
+	left = this->x - cellWidth_div_2;
+	top = this->y - this->cellHeight / 2;
+	right = left + this->cellWidth * this->length;
+	bottom = top + this->cellHeight;
+}
+
 void CPlatform::Render()
 {
 	if (this->length <= 0) return;
@@ -39,4 +48,18 @@ void CPlatform::Render()
 	{
 		CGameManager::GetAssetManager()->GetSprite(this->spriteIdEnd)->Render(concreteSpritePosX, this->y);
 	}
+}
+
+void CPlatform::RenderBoundingBox()
+{
+	float left, top, bottom, right;
+
+	this->GetBoundingBox(left, top, right, bottom);
+
+	float xx = this->x - this->cellWidth / 2 + ((int)right - (int)left) / 2; // why though????
+
+	CGraphicManager::GetInstance()->Render(
+		xx, this->y, ID_TEX_BBOX,
+		left, top, right, bottom,
+		BBOX_ALPHA, 0, 0);
 }

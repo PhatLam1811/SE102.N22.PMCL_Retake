@@ -11,6 +11,16 @@
 #define P_METER_INCREMENT 0.015f // 0.0015f
 #define SPEED_INCREMENT 0.05f // 0.003f
 
+#define MARIO_BIG_BBOX_WIDTH  14
+#define MARIO_BIG_BBOX_HEIGHT 24
+#define MARIO_BIG_SITTING_BBOX_WIDTH  14
+#define MARIO_BIG_SITTING_BBOX_HEIGHT 16
+
+#define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
+
+#define MARIO_SMALL_BBOX_WIDTH  13
+#define MARIO_SMALL_BBOX_HEIGHT 12
+
 class CMarioForm
 {
 public: void virtual Render() = 0;
@@ -45,6 +55,7 @@ public:
 	void Move(DWORD elapsedTime);
 
 	// Inherited via CBaseCharacter
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) override;
 	virtual void Update(DWORD elapsedTime) override;
 	virtual void Render() override;
 };
