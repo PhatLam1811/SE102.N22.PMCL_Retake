@@ -3,6 +3,7 @@
 
 #include "CPlayScene.h"
 #include "CGameManager.h"
+#include "CCollisionManager.h"
 #include "GameDefine.h"
 #include "Utils.h"
 
@@ -72,12 +73,16 @@ void CPlayScene::Unload()
 }
 
 void CPlayScene::Update(DWORD dt) 
-{ 
-	this->player->Update(dt);
+{
+	for (size_t i = 0; i < this->gameObjects.size(); i++)
+	{
+		this->gameObjects[i]->Update(dt, &this->gameObjects);
+	}
 
 	// Update camera to follow mario
-	float camX = this->player->GetPositionX();
-	float camY = this->player->GetPositionY();
+	float camX, camY;
+
+	this->player->GetPosition(camX, camY);
 
 	int backBufferWidth = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferWidth();
 	int backBufferHeight = CGameManager::GetInstance()->GetGraphicManager()->GetBackBufferHeight();

@@ -3,15 +3,15 @@
 #include "CAnimationManager.h"
 #include "Utils.h"
 
-CMario::CMario(float x, float y) : CBaseCharacter(x, y)
+CMario::CMario(float x, float y) : CBaseGameObject(x, y)
 {
 	this->vx = MARIO_WALKING_SPEED;
 	this->vy = MARIO_WALKING_SPEED;
 
 	this->dirX = 1;
 
-	this->accelX = 0.0f;
-	this->accelY = 0.0f;
+	this->ax = 0.0f;
+	this->ay = 0.0f;
 
 	this->powerMeter = 0.0f; // p-meter fill up from 1f to 2f (can't multiply zero with other scales)
 
@@ -28,13 +28,13 @@ void CMario::PowerUp() { this->isPowerUp = this->isSpeedingUp; }
 
 void CMario::OnSlowDown()
 {
-	if (this->accelX == 0.0f || this->isSpeedingUp) return;
+	if (this->ax == 0.0f || this->isSpeedingUp) return;
 
 	// accelX decrease overtime
-	this->accelX += this->dirX * -SPEED_INCREMENT;
+	this->ax += this->dirX * -SPEED_INCREMENT;
 
 	// stop if accelX & moving direction are opposite 
-	if (this->accelX * this->dirX <= 0.0f) this->accelX = 0.0f;
+	if (this->ax * this->dirX <= 0.0f) this->ax = 0.0f;
 
 	// DebugOut(L"[INFO] ON SLOWING DOWN!\n");
 }
@@ -60,20 +60,20 @@ void CMario::OnSpeedUp(int dirX)
 	// accelX increase overtime
 	float scaleOvertime = this->dirX * SPEED_INCREMENT;
 
-	this->accelX += scaleOvertime;
+	this->ax += scaleOvertime;
 
 	// accelX scale is limited
 	float maxScale = this->powerMeter + MARIO_ACCEL_SCALE;
 
-	if (this->accelX > maxScale) this->accelX = maxScale;
-	if (this->accelX < -maxScale) this->accelX = -maxScale;
+	if (this->ax > maxScale) this->ax = maxScale;
+	if (this->ax < -maxScale) this->ax = -maxScale;
 
 	//DebugOut(L"[INFO] ON SPEEDING UP!\n");
 }
 
 void CMario::Move(DWORD elapsedTime)
 {
-	this->x += this->accelX * this->vx * elapsedTime;
+	this->x += this->ax * this->vx * elapsedTime;
 }
 
 // ====================================================
@@ -86,7 +86,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	bottom = top + MARIO_BIG_BBOX_HEIGHT;
 }
 
-void CMario::Update(DWORD elapsedTime)
+void CMario::Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* gameObjects)
 {
 	if (this->isPowerUp) this->OnPowerUp();
 	this->OnSlowDown();

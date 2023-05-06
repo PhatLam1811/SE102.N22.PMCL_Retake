@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CBaseCharacter.h"
+#include "CBaseGameObject.h"
 
 #define MARIO_WALKING_SPEED 0.1f
 
@@ -26,7 +26,7 @@ class CMarioForm
 public: void virtual Render() = 0;
 };
 
-class CMario : public CBaseCharacter
+class CMario : public CBaseGameObject
 {
 private:
 	float powerMeter; // P meter
@@ -55,7 +55,7 @@ public:
 	void Move(DWORD elapsedTime);
 
 	// Inherited via CBaseCharacter
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) override;
-	virtual void Update(DWORD elapsedTime) override;
-	virtual void Render() override;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* gameObjects);
+	virtual void Render();
 };

@@ -84,20 +84,17 @@
     <ClCompile Include="CAnimation.cpp">
       <Filter>Source Files\Graphic Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CCamera.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CInputManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="CMario.cpp">
       <Filter>Source Files\Game Objects\Characters\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="CBaseGameObject.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CPlatform.cpp">
       <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +155,11 @@
     <ClInclude Include="CMario.h">
       <Filter>Header Files\Game Objects\Characters\Mario</Filter>
     </ClInclude>
-    <ClInclude Include="CBaseCharacter.h">
-      <Filter>Header Files\Game Objects\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="CPlatform.h">
       <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollisionManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

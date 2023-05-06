@@ -17,7 +17,7 @@ public:
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Render();
-	void Update(DWORD dt) {}
+	void Update(DWORD dt, std::vector<CBaseGameObject*>* gameObjects) {}
 	void RenderBoundingBox();
 };
 
