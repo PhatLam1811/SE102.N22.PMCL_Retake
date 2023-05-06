@@ -5,7 +5,7 @@
 #include "CScene.h"
 #include "CInputManager.h"
 
-class CPlayScene : public CScene, public IKeyInputProcessable
+class CPlayScene : public CScene, public IKeyInputHandler
 {
 private:
 	CMario* player;
@@ -14,11 +14,11 @@ public:
 	CPlayScene(int sceneId, wstring filePath);
 
 	// Inherited via CScene
-	virtual void Load();
-	virtual void AddGameObject(CBaseGameObject* gameObject);
-	virtual void Unload();
-	virtual void Update(DWORD dt);
-	virtual void Render();
+	virtual void Load() override;
+	virtual void AddGameObject(CBaseGameObject* gameObject) override;
+	virtual void Unload() override;
+	virtual void Update(DWORD dt) override;
+	virtual void Render() override;
 
 	// Inherited via OnInputCallback
 	virtual void OnKeyDown(int keyCode);

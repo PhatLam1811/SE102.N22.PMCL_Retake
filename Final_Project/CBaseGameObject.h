@@ -6,11 +6,13 @@
 #include <typeinfo>
 
 #include "CGraphicManager.h"
+#include "CCollisionManager.h"
 #include "GameDefine.h"
-
 
 #define DIR_LEFT -1
 #define DIR_RIGHT 1
+
+#define GRAV_ACCEL 3.0f
 
 class CBaseGameObject
 {
@@ -40,9 +42,13 @@ public:
 		this->vy = 0.0f;
 
 		this->ax = 0.0f;
-		this->ay = 0.0f;
+		this->ay = GRAV_ACCEL;
 
 		this->dirX = DIR_RIGHT;
+	}
+	~CBaseGameObject()
+	{
+		delete this;
 	}
 
 	std::string GetType()
@@ -68,10 +74,15 @@ public:
 	}
 	void GetSpeed(float& vx, float& vy) 
 	{
-		vx = this->vx;
-		vy = this->vy;
+		vx = this->vx * this->ax;
+		vy = this->vy * this->ay;
 	}
 
+	virtual bool IsDeleted() { return false; }
+	virtual bool IsBlocking() { return true; }	// whether other objects can go through
+	virtual bool IsCollidable() { return true; }	// whether this object 
+
+	// game object's hitbox
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 	virtual void RenderBoundingBox()
 	{
@@ -86,11 +97,9 @@ public:
 			BBOX_ALPHA, 0, 0);
 	}
 
+	virtual void OnNoCollision(DWORD elapsedTime) = 0;
+	virtual void OnCollisionWith(CCollisionEvent* collisionEvent) = 0;
+
 	virtual void Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* collidableObjects = nullptr) = 0;
 	virtual void Render() = 0;
-
-	~CBaseGameObject() 
-	{
-		delete this;
-	}
 };

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class IKeyInputProcessable
+class IKeyInputHandler
 {
 public:
 	virtual void OnKeyDown(int keyCode) = 0;
@@ -28,7 +28,7 @@ private:
 	BYTE  keyStates[KEYBOARD_STATE_SIZE];			// DirectInput keyboard state buffer 
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
-	vector<IKeyInputProcessable*> keyProcessors;	// Key input concrete handlers (Scenes)
+	vector<IKeyInputHandler*> keyProcessors;	// Key input concrete handlers (Scenes)
 
 	CInputManager();
 	CInputManager(const CInputManager*);
@@ -38,8 +38,8 @@ public:
 	
 	void Init();
 
-	void AssignKeyInputCallback(IKeyInputProcessable* processor);
-	void UnAssignKeyInputCallback(IKeyInputProcessable* processor);
+	void AssignKeyInputCallback(IKeyInputHandler* handler);
+	void UnAssignKeyInputCallback(IKeyInputHandler* handler);
 	
 	void OnKeyDownCallback(int keyCode);
 	void OnKeyPressCallback(int keyCode);

@@ -1,11 +1,13 @@
 #pragma once
-#include <vector>
 
-#include "CBaseGameObject.h"
+#include <Windows.h>
+#include <vector>
 
 using namespace std;
 
-struct CollisionEvent
+class CBaseGameObject;
+
+struct CCollisionEvent
 {
 	CBaseGameObject* src_obj;		// source object : the object from which to calculate collision
 	CBaseGameObject* obj;			// the target object
@@ -15,7 +17,7 @@ struct CollisionEvent
 	float dx, dy;				// *RELATIVE* movement distance between this object and obj
 	bool isDeleted;
 
-	CollisionEvent(float t, float nx, float ny, float dx = 0, float dy = 0,
+	CCollisionEvent(float t, float nx, float ny, float dx = 0, float dy = 0,
 		CBaseGameObject* obj = nullptr, CBaseGameObject* src_obj = nullptr)
 	{
 		this->t = t;
@@ -28,9 +30,9 @@ struct CollisionEvent
 		this->isDeleted = false;
 	}
 
-	int WasCollided() { return t >= 0.0f && t <= 1.0f; }
+	int WasCollided() { return this->t >= 0.0f && this->t <= 1.0f; }
 
-	static bool compare(const CollisionEvent* &a, CollisionEvent* &b)
+	static bool compare(const CCollisionEvent* &a, CCollisionEvent* &b)
 	{
 		return a->t < b->t;
 	}
@@ -39,7 +41,7 @@ struct CollisionEvent
 class CCollisionManager
 {
 private:
-	static CCollisionManager* instance;
+	static CCollisionManager* __instance;
 
 public:
 	static CCollisionManager* GetInstance();
@@ -59,7 +61,7 @@ public:
 		float& nx,
 		float& ny);
 
-	CollisionEvent* SweptAABB(
+	CCollisionEvent* SweptAABB(
 		CBaseGameObject* objSrc,
 		DWORD dt,
 		CBaseGameObject* objDest);
@@ -68,13 +70,13 @@ public:
 		CBaseGameObject* objSrc,
 		DWORD dt,
 		vector<CBaseGameObject*>* objDests,
-		vector<CollisionEvent*>& coEvents);
+		vector<CCollisionEvent*>& coEvents);
 
 	void Filter(
 		CBaseGameObject* objSrc,
-		vector<CollisionEvent*>& coEvents,
-		CollisionEvent* &colX,
-		CollisionEvent* &colY,
+		vector<CCollisionEvent*>& coEvents,
+		CCollisionEvent*& colX,
+		CCollisionEvent*& colY,
 		int filterBlock,
 		int filterX,
 		int filterY);

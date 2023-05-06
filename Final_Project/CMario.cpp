@@ -3,6 +3,8 @@
 #include "CAnimationManager.h"
 #include "Utils.h"
 
+// ====================================================
+
 CMario::CMario(float x, float y) : CBaseGameObject(x, y)
 {
 	this->vx = MARIO_WALKING_SPEED;
@@ -10,10 +12,8 @@ CMario::CMario(float x, float y) : CBaseGameObject(x, y)
 
 	this->dirX = 1;
 
-	this->ax = 0.0f;
-	this->ay = 0.0f;
-
-	this->powerMeter = 0.0f; // p-meter fill up from 1f to 2f (can't multiply zero with other scales)
+	// p-meter fill up from 0-1
+	this->powerMeter = 0.0f; 
 
 	this->form = nullptr;
 
@@ -21,8 +21,6 @@ CMario::CMario(float x, float y) : CBaseGameObject(x, y)
 	this->isSlowingDown = false;
 	this->isSpeedingUp = false;
 }
-
-// ====================================================
 
 void CMario::PowerUp() { this->isPowerUp = this->isSpeedingUp; }
 
@@ -74,6 +72,7 @@ void CMario::OnSpeedUp(int dirX)
 void CMario::Move(DWORD elapsedTime)
 {
 	this->x += this->ax * this->vx * elapsedTime;
+	this->y += this->ay * this->vy * elapsedTime;
 }
 
 // ====================================================
@@ -89,17 +88,24 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* gameObjects)
 {
 	if (this->isPowerUp) this->OnPowerUp();
-	this->OnSlowDown();
+	this->OnSlowDown();	
 
-	//DebugOut(L"[INFO] Mario P meter : %f\n", this->powerMeter);
-	//DebugOut(L"[INFO] Mario accel x : %f\n", this->accelX);
-
-	this->Move(elapsedTime);
-
-	return;
+	CCollisionManager::GetInstance()->Process(this, elapsedTime, gameObjects);
 }
 
 void CMario::Render()
 {
 	CAnimationManager::GetInstance()->GetAnimation(501)->Play(this->x, this->y);
+}
+
+// ====================================================
+
+void CMario::OnNoCollision(DWORD elapsedTime)
+{
+	this->Move(elapsedTime);
+}
+
+void CMario::OnCollisionWith(CCollisionEvent* collisionEvent)
+{
+
 }

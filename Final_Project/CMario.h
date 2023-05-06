@@ -31,7 +31,6 @@ class CMario : public CBaseGameObject
 private:
 	float powerMeter; // P meter
 
-
 	bool isPowerUp;
 	bool isMaxPower;
 	bool isPowerOnCooldown;
@@ -51,11 +50,14 @@ public:
 	void OnSlowDown();
 
 	void OnPowerUp();
-	
+
 	void Move(DWORD elapsedTime);
 
 	// Inherited via CBaseCharacter
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* gameObjects);
-	virtual void Render();
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) override;
+	virtual void Update(DWORD elapsedTime, std::vector<CBaseGameObject*>* gameObjects) override;
+	virtual void Render() override;
+
+	virtual void OnNoCollision(DWORD elapsedTime) override;
+	virtual void OnCollisionWith(CCollisionEvent* collisionEvent) override;
 };

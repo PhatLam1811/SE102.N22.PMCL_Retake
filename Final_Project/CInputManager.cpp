@@ -75,19 +75,19 @@ CInputManager::CInputManager() { return; }
 CInputManager::CInputManager(const CInputManager*) { return; }
 CInputManager::~CInputManager() { delete this; }
 
-void CInputManager::AssignKeyInputCallback(IKeyInputProcessable* processor)
+void CInputManager::AssignKeyInputCallback(IKeyInputHandler* handler)
 {
-	this->UnAssignKeyInputCallback(processor); // prevent duplicates
-	this->keyProcessors.push_back(processor);
+	this->UnAssignKeyInputCallback(handler); // prevent duplicates
+	this->keyProcessors.push_back(handler);
 }
 
-void CInputManager::UnAssignKeyInputCallback(IKeyInputProcessable* processor)
+void CInputManager::UnAssignKeyInputCallback(IKeyInputHandler* handler)
 {
 	this->keyProcessors.erase(
 		remove(
 		this->keyProcessors.begin(),
 		this->keyProcessors.end(),
-		processor),
+		handler),
 		this->keyProcessors.end());
 }
 

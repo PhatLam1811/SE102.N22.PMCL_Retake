@@ -63,3 +63,7 @@ void CPlatform::RenderBoundingBox()
 		left, top, right, bottom,
 		BBOX_ALPHA, 0, 0);
 }
+
+void CPlatform::OnNoCollision(DWORD elapsedTime) { }
+
+void CPlatform::OnCollisionWith(CCollisionEvent* collisionEvent) { }

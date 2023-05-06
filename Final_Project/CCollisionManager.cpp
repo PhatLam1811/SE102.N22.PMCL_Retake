@@ -1,14 +1,17 @@
 #include "CCollisionManager.h"
+#include "CBaseGameObject.h"
 
-#define BLOCK_PUSH_FACTOR 0.4f
+#define BLOCK_PUSH_FACTOR 0.6f
 
-CCollisionManager* CCollisionManager::instance = nullptr;
+CCollisionManager* CCollisionManager::__instance = nullptr;
 
 CCollisionManager* CCollisionManager::GetInstance()
 {
-	if (instance == nullptr) instance = new CCollisionManager();
-	return instance;
+	if (__instance == nullptr) __instance = new CCollisionManager();
+	return __instance;
 }
+
+// ====================================================
 
 /*
 	SweptAABB
@@ -111,24 +114,24 @@ void CCollisionManager::SweptAABB(
 
 }
 
+// ====================================================
+
 /*
 	Extension of original SweptAABB to deal with two moving objects
 */
-CollisionEvent* CCollisionManager::SweptAABB(CBaseGameObject* objSrc, DWORD dt, CBaseGameObject* objDest)
+CCollisionEvent* CCollisionManager::SweptAABB(CBaseGameObject* objSrc, DWORD dt, CBaseGameObject* objDest)
 {
 	float sl, st, sr, sb;		// static object bbox
 	float ml, mt, mr, mb;		// moving object bbox
 	float t, nx, ny;
 
 	float mvx, mvy;
-	// objSrc->GetSpeed(mvx, mvy);
-	mvx = mvy = 0; // should be initialize with the above line
+	objSrc->GetSpeed(mvx, mvy);
 	float mdx = mvx * dt;
 	float mdy = mvy * dt;
 
 	float svx, svy;
-	// objDest->GetSpeed(svx, svy);
-	svx = svy = 0; // should be initialize with the above line
+	objDest->GetSpeed(svx, svy);
 	float sdx = svx * dt;
 	float sdy = svy * dt;
 
@@ -141,16 +144,18 @@ CollisionEvent* CCollisionManager::SweptAABB(CBaseGameObject* objSrc, DWORD dt, 
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
 
-	SweptAABB(
+	this->SweptAABB(
 		ml, mt, mr, mb,
 		dx, dy,
 		sl, st, sr, sb,
 		t, nx, ny
 	);
 
-	CollisionEvent* e = new CollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
+	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
 	return e;
 }
+
+// ====================================================
 
 /*
 	Calculate potential collisions with the list of colliable objects
@@ -158,15 +163,11 @@ CollisionEvent* CCollisionManager::SweptAABB(CBaseGameObject* objSrc, DWORD dt, 
 	coObjects: the list of colliable objects
 	coEvents: list of potential collisions
 */
-void CCollisionManager::Scan(
-	CBaseGameObject* objSrc,
-	DWORD dt,
-	vector<CBaseGameObject*>* objDests,
-	vector<CollisionEvent*>& coEvents)
+void CCollisionManager::Scan(CBaseGameObject* objSrc, DWORD dt, vector<CBaseGameObject*>* objDests, vector<CCollisionEvent*>& coEvents)
 {
 	for (UINT i = 0; i < objDests->size(); i++)
 	{
-		CollisionEvent* e = SweptAABB(objSrc, dt, objDests->at(i));
+		CCollisionEvent* e = SweptAABB(objSrc, dt, objDests->at(i));
 
 		if (e->WasCollided() == 1)
 			coEvents.push_back(e);
@@ -177,10 +178,12 @@ void CCollisionManager::Scan(
 	//std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+// ====================================================
+
 void CCollisionManager::Filter(CBaseGameObject* objSrc,
-	vector<CollisionEvent*>& coEvents,
-	CollisionEvent*& colX,
-	CollisionEvent*& colY,
+	vector<CCollisionEvent*>& coEvents,
+	CCollisionEvent*& colX,
+	CCollisionEvent*& colY,
 	int filterBlock = 1,		// 1 = only filter block collisions, 0 = filter all collisions 
 	int filterX = 1,			// 1 = process events on X-axis, 0 = skip events on X 
 	int filterY = 1)			// 1 = process events on Y-axis, 0 = skip events on Y
@@ -194,15 +197,15 @@ void CCollisionManager::Filter(CBaseGameObject* objSrc,
 
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
-		CollisionEvent* c = coEvents[i];
-		if (c->isDeleted) continue;
-		// if (c->obj->IsDeleted()) continue;
+		CCollisionEvent* c = coEvents[i];
+		 if (c->isDeleted) continue;
+		 if (c->obj->IsDeleted()) continue;
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		/*if (filterBlock == 1 && !c->obj->IsBlocking())
+		if (filterBlock == 1 && !c->obj->IsBlocking())
 		{
 			continue;
-		}*/
+		}
 
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;
@@ -217,56 +220,53 @@ void CCollisionManager::Filter(CBaseGameObject* objSrc,
 	if (min_iy >= 0) colY = coEvents[min_iy];
 }
 
+// ====================================================
+
 /*
 *  Simple/Sample collision framework
 *  NOTE: Student might need to improve this based on game logic
 */
 void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseGameObject*>* coObjects)
 {
-	vector<CollisionEvent*> collisionEvents;
+	vector<CCollisionEvent*> coEvents;
+	CCollisionEvent* colX = NULL;
+	CCollisionEvent* colY = NULL;
 
-	CollisionEvent* colX = nullptr;
-	CollisionEvent* colY = nullptr;
+	coEvents.clear();
 
-	collisionEvents.clear();
-
-	/*if (objSrc->IsCollidable())
+	if (objSrc->IsCollidable())
 	{
-		Scan(objSrc, dt, coObjects, coEvents);
-	}*/
-
-	// for now just scan through all of the game objects
-	Scan(objSrc, dt, coObjects, collisionEvents);
+		this->Scan(objSrc, dt, coObjects, coEvents);
+	}
 
 	// No collision detected
-	if (collisionEvents.size() == 0)
+	if (coEvents.size() == 0)
 	{
-		// objSrc->OnNoCollision(dt); -- do basic (moving) update here
+		objSrc->OnNoCollision(dt);
 	}
 	else
 	{
-		Filter(objSrc, collisionEvents, colX, colY);
+		this->Filter(objSrc, coEvents, colX, colY);
 
 		float x, y, vx, vy, dx, dy;
 		objSrc->GetPosition(x, y);
-		// objSrc->GetSpeed(vx, vy);
-		vx = vy = 0; // should be initialize with the above line
+		objSrc->GetSpeed(vx, vy);
 		dx = vx * dt;
 		dy = vy * dt;
 
-		if (colX != nullptr && colY != nullptr)
+		if (colX != NULL && colY != NULL)
 		{
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
 				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
 
-				// objSrc->OnCollisionWith(colY);
+				objSrc->OnCollisionWith(colY);
 
 				//
 				// see if after correction on Y, is there still a collision on X ? 
 				//
-				CollisionEvent* colX_other = nullptr;
+				CCollisionEvent* colX_other = NULL;
 
 				//
 				// check again if there is true collision on X 
@@ -274,15 +274,15 @@ void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseG
 				colX->isDeleted = true;		// remove current collision event on X
 
 				// replace with a new collision event using corrected location 
-				collisionEvents.push_back(SweptAABB(objSrc, dt, colX->obj));
+				coEvents.push_back(SweptAABB(objSrc, dt, colX->obj));
 
 				// re-filter on X only
-				Filter(objSrc, collisionEvents, colX_other, colY, /*filterBlock = */ 1, 1, /*filterY=*/0);
+				this->Filter(objSrc, coEvents, colX_other, colY, /*filterBlock = */ 1, 1, /*filterY=*/0);
 
 				if (colX_other != NULL)
 				{
 					x += colX_other->t * dx + colX_other->nx * BLOCK_PUSH_FACTOR;
-					// objSrc->OnCollisionWith(colX_other);
+					objSrc->OnCollisionWith(colX_other);
 				}
 				else
 				{
@@ -294,12 +294,12 @@ void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseG
 				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
 
-				// objSrc->OnCollisionWith(colX);
+				objSrc->OnCollisionWith(colX);
 
 				//
 				// see if after correction on X, is there still a collision on Y ? 
 				//
-				CollisionEvent* colY_other = NULL;
+				CCollisionEvent* colY_other = NULL;
 
 				//
 				// check again if there is true collision on Y
@@ -307,15 +307,15 @@ void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseG
 				colY->isDeleted = true;		// remove current collision event on Y
 
 				// replace with a new collision event using corrected location 
-				collisionEvents.push_back(SweptAABB(objSrc, dt, colY->obj));
+				coEvents.push_back(SweptAABB(objSrc, dt, colY->obj));
 
 				// re-filter on Y only
-				Filter(objSrc, collisionEvents, colX, colY_other, /*filterBlock = */ 1, /*filterX=*/0, /*filterY=*/1);
+				this->Filter(objSrc, coEvents, colX, colY_other, /*filterBlock = */ 1, /*filterX=*/0, /*filterY=*/1);
 
 				if (colY_other != NULL)
 				{
 					y += colY_other->t * dy + colY_other->ny * BLOCK_PUSH_FACTOR;
-					// objSrc->OnCollisionWith(colY_other);
+					objSrc->OnCollisionWith(colY_other);
 				}
 				else
 				{
@@ -328,14 +328,14 @@ void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseG
 			{
 				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
 				y += dy;
-				// objSrc->OnCollisionWith(colX);
+				objSrc->OnCollisionWith(colX);
 			}
 			else
 				if (colY != NULL)
 				{
 					x += dx;
 					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
-					// objSrc->OnCollisionWith(colY);
+					objSrc->OnCollisionWith(colY);
 				}
 				else // both colX & colY are NULL 
 				{
@@ -349,15 +349,15 @@ void CCollisionManager::Process(CBaseGameObject* objSrc, DWORD dt, vector<CBaseG
 	//
 	// Scan all non-blocking collisions for further collision logic
 	//
-	for (UINT i = 0; i < collisionEvents.size(); i++)
+	for (UINT i = 0; i < coEvents.size(); i++)
 	{
-		CollisionEvent* e = collisionEvents[i];
+		CCollisionEvent* e = coEvents[i];
 		if (e->isDeleted) continue;
-		// if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
+		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
 
-		// objSrc->OnCollisionWith(e);
+		objSrc->OnCollisionWith(e);
 	}
 
 
-	for (UINT i = 0; i < collisionEvents.size(); i++) delete collisionEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
